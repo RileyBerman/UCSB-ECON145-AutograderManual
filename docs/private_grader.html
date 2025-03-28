@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.1 private_grader() | UCSB ECON 145 Autograder Manual</title>
+  <meta name="description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.1 private_grader() | UCSB ECON 145 Autograder Manual" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.1 private_grader() | UCSB ECON 145 Autograder Manual" />
+  
+  <meta name="twitter:description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
+  
+
+<meta name="author" content="Riley Berman, Alex Zhao, &amp; 2024 ECON 145 Summer Team" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="Private-Questions.html"/>
+<link rel="next" href="ggplot_grader.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><center><img src="images/UCSB.png" alt="logo" width="50%" height="50%"style="margin: 15px 0 0 0"></center></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a>
+<ul>
+<li class="chapter" data-level="" data-path="Acknowledgements.html"><a href="Acknowledgements.html"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="Introduction.html"><a href="Introduction.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="Autograder-Conventions.html"><a href="Autograder-Conventions.html"><i class="fa fa-check"></i><b>2</b> Autograder Conventions</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="general-structure.html"><a href="general-structure.html"><i class="fa fa-check"></i><b>2.1</b> General Structure</a></li>
+<li class="chapter" data-level="2.2" data-path="test.html"><a href="test.html"><i class="fa fa-check"></i><b>2.2</b> What is test.results?</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="Public-Questions.html"><a href="Public-Questions.html"><i class="fa fa-check"></i><b>3</b> Public Questions</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="general-form.html"><a href="general-form.html"><i class="fa fa-check"></i><b>3.1</b> General Form</a></li>
+<li class="chapter" data-level="3.2" data-path="Name-Check.html"><a href="Name-Check.html"><i class="fa fa-check"></i><b>3.2</b> Name Check (G)</a></li>
+<li class="chapter" data-level="3.3" data-path="Prerequisite-Check.html"><a href="Prerequisite-Check.html"><i class="fa fa-check"></i><b>3.3</b> Prerequisite Check (G)</a></li>
+<li class="chapter" data-level="3.4" data-path="Structure-Check.html"><a href="Structure-Check.html"><i class="fa fa-check"></i><b>3.4</b> Structure Check (G)</a></li>
+<li class="chapter" data-level="3.5" data-path="Column-Name-Check.html"><a href="Column-Name-Check.html"><i class="fa fa-check"></i><b>3.5</b> Column Name Check (G)</a></li>
+<li class="chapter" data-level="3.6" data-path="Row-Column-Check.html"><a href="Row-Column-Check.html"><i class="fa fa-check"></i><b>3.6</b> Row &amp; Column Check (G)</a></li>
+<li class="chapter" data-level="3.7" data-path="Correct-Check.html"><a href="Correct-Check.html"><i class="fa fa-check"></i><b>3.7</b> Correct Check (G)</a></li>
+<li class="chapter" data-level="3.8" data-path="PERMID-Check.html"><a href="PERMID-Check.html"><i class="fa fa-check"></i><b>3.8</b> PERMID Check (G)</a></li>
+<li class="chapter" data-level="3.9" data-path="Type-Check.html"><a href="Type-Check.html"><i class="fa fa-check"></i><b>3.9</b> Type Check (S)</a></li>
+<li class="chapter" data-level="3.10" data-path="Value-Check.html"><a href="Value-Check.html"><i class="fa fa-check"></i><b>3.10</b> Value Check (S)</a></li>
+<li class="chapter" data-level="3.11" data-path="Calculation-Check.html"><a href="Calculation-Check.html"><i class="fa fa-check"></i><b>3.11</b> Calculation Check (S)</a></li>
+<li class="chapter" data-level="3.12" data-path="NA-Check.html"><a href="NA-Check.html"><i class="fa fa-check"></i><b>3.12</b> NA Check (S)</a></li>
+<li class="chapter" data-level="3.13" data-path="Expression-Check.html"><a href="Expression-Check.html"><i class="fa fa-check"></i><b>3.13</b> Expression Check (S)</a></li>
+<li class="chapter" data-level="3.14" data-path="Miscellaneous-Check.html"><a href="Miscellaneous-Check.html"><i class="fa fa-check"></i><b>3.14</b> Miscellaneous Checks (S)</a></li>
+<li class="chapter" data-level="3.15" data-path="dynamic-checks.html"><a href="dynamic-checks.html"><i class="fa fa-check"></i><b>3.15</b> Dynamic Checks</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="Check-Flowchart.html"><a href="Check-Flowchart.html"><i class="fa fa-check"></i><b>4</b> Check Flowchart</a></li>
+<li class="chapter" data-level="5" data-path="Putting-It-All-Together.html"><a href="Putting-It-All-Together.html"><i class="fa fa-check"></i><b>5</b> Putting It All Together</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="example-tibble.html"><a href="example-tibble.html"><i class="fa fa-check"></i><b>5.1</b> Example: Tibble</a></li>
+<li class="chapter" data-level="5.2" data-path="example-vector.html"><a href="example-vector.html"><i class="fa fa-check"></i><b>5.2</b> Example: Vector</a></li>
+<li class="chapter" data-level="5.3" data-path="example-list.html"><a href="example-list.html"><i class="fa fa-check"></i><b>5.3</b> Example: List</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="Private-Questions.html"><a href="Private-Questions.html"><i class="fa fa-check"></i><b>6</b> Private Questions</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="private_grader.html"><a href="private_grader.html"><i class="fa fa-check"></i><b>6.1</b> private_grader()</a>
+<ul>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#description"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#usage"><i class="fa fa-check"></i>Usage</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#arguments"><i class="fa fa-check"></i>Arguments</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#value"><i class="fa fa-check"></i>Value</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#details"><i class="fa fa-check"></i>Details</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#example-1-tibble"><i class="fa fa-check"></i>Example 1: Tibble</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#example-2-vectors"><i class="fa fa-check"></i>Example 2: Vectors</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#example-3-lists"><i class="fa fa-check"></i>Example 3: Lists</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#private_grader-plots"><i class="fa fa-check"></i>Example 4: Plots</a></li>
+<li class="chapter" data-level="" data-path="private_grader.html"><a href="private_grader.html#acknowledgements"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="ggplot_grader.html"><a href="ggplot_grader.html"><i class="fa fa-check"></i><b>6.2</b> ggplot_grader()</a>
+<ul>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#description-1"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#usage-1"><i class="fa fa-check"></i>Usage</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#arguments-1"><i class="fa fa-check"></i>Arguments</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#value-1"><i class="fa fa-check"></i>Value</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#details-1"><i class="fa fa-check"></i>Details</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#example-1"><i class="fa fa-check"></i>Example 1</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#example-2"><i class="fa fa-check"></i>Example 2</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#example-3"><i class="fa fa-check"></i>Example 3</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#example-4"><i class="fa fa-check"></i>Example 4</a></li>
+<li class="chapter" data-level="" data-path="ggplot_grader.html"><a href="ggplot_grader.html#acknowledgements-1"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html"><i class="fa fa-check"></i><b>6.3</b> private_tabyl_grader()</a>
+<ul>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#description-2"><i class="fa fa-check"></i>Description</a></li>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#usage-2"><i class="fa fa-check"></i>Usage</a></li>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#arguments-2"><i class="fa fa-check"></i>Arguments</a></li>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#value-2"><i class="fa fa-check"></i>Value</a></li>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#details-2"><i class="fa fa-check"></i>Details</a></li>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#example"><i class="fa fa-check"></i>Example</a></li>
+<li class="chapter" data-level="" data-path="private_tabyl_grader.html"><a href="private_tabyl_grader.html#acknowledgements-2"><i class="fa fa-check"></i>Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="DGP.html"><a href="DGP.html"><i class="fa fa-check"></i><b>7</b> DGP.R</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="examples.html"><a href="examples.html"><i class="fa fa-check"></i><b>7.1</b> Examples</a>
+<ul>
+<li class="chapter" data-level="" data-path="examples.html"><a href="examples.html#example-1-1"><i class="fa fa-check"></i>Example 1</a></li>
+<li class="chapter" data-level="" data-path="examples.html"><a href="examples.html#example-2-1"><i class="fa fa-check"></i>Example 2</a></li>
+<li class="chapter" data-level="" data-path="examples.html"><a href="examples.html#example-3-1"><i class="fa fa-check"></i>Example 3</a></li>
+<li class="chapter" data-level="" data-path="examples.html"><a href="examples.html#example-4-1"><i class="fa fa-check"></i>Example 4</a></li>
+<li class="chapter" data-level="" data-path="examples.html"><a href="examples.html#example-5"><i class="fa fa-check"></i>Example 5</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">UCSB ECON 145 Autograder Manual</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="private_grader" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> private_grader()<a href="private_grader.html#private_grader" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="description" class="section level3 unnumbered hasAnchor">
+<h3>Description<a href="private_grader.html#description" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Grades Private Questions involving tibbles, vectors, lists, or plots, providing only basic feedback.</p>
+<p>The function implements many of the <a href="Public-Questions.html#General-Checks">General Checks</a> discussed earlier.</p>
+</div>
+<div id="usage" class="section level3 unnumbered hasAnchor">
+<h3>Usage<a href="private_grader.html#usage" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="private_grader.html#cb32-1" tabindex="-1"></a><span class="fu">private_grader</span>(var_name, </span>
+<span id="cb32-2"><a href="private_grader.html#cb32-2" tabindex="-1"></a>               var, </span>
+<span id="cb32-3"><a href="private_grader.html#cb32-3" tabindex="-1"></a>               var_test, </span>
+<span id="cb32-4"><a href="private_grader.html#cb32-4" tabindex="-1"></a>               <span class="at">status =</span> <span class="fu">paste0</span>(<span class="st">&quot;Question &quot;</span>, quest_num, <span class="st">&quot; (Private)&quot;</span>), </span>
+<span id="cb32-5"><a href="private_grader.html#cb32-5" tabindex="-1"></a>               <span class="at">var_status =</span> <span class="st">&quot;tib&quot;</span>, </span>
+<span id="cb32-6"><a href="private_grader.html#cb32-6" tabindex="-1"></a>               <span class="at">prev_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb32-7"><a href="private_grader.html#cb32-7" tabindex="-1"></a>               <span class="at">is_tibble_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb32-8"><a href="private_grader.html#cb32-8" tabindex="-1"></a>               <span class="at">quest_check_read =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb32-9"><a href="private_grader.html#cb32-9" tabindex="-1"></a>               <span class="at">quest_num =</span> <span class="dv">0</span>, </span>
+<span id="cb32-10"><a href="private_grader.html#cb32-10" tabindex="-1"></a>               <span class="at">quest_pt =</span> <span class="dv">0</span>,</span>
+<span id="cb32-11"><a href="private_grader.html#cb32-11" tabindex="-1"></a>               <span class="at">quest_prev =</span> <span class="dv">1</span>, </span>
+<span id="cb32-12"><a href="private_grader.html#cb32-12" tabindex="-1"></a>               <span class="at">quest_prev_status =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+</div>
+<div id="arguments" class="section level3 unnumbered hasAnchor">
+<h3>Arguments<a href="private_grader.html#arguments" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<table>
+<colgroup>
+<col width="8%" />
+<col width="69%" />
+<col width="21%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Element</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">var_name</td>
+<td align="left">character, the expected name of var</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">var</td>
+<td align="left">expected R object, the student’s object</td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">var_test</td>
+<td align="left">other R object, the answer key’s object to be compared with var</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">status</td>
+<td align="left">character, the question’s displayed part, number, and type (Private/Public); Example: “Part 2 Question 2 (Private)”</td>
+<td align="left">paste0(“Question”, quest_num, ” (Private)“)</td>
+</tr>
+<tr class="odd">
+<td align="left">var_status</td>
+<td align="left">the data type of var; Example: “tib” (tibble), “vect” (vector), “lst” (list), “plt” (plot)</td>
+<td align="left">“tib”</td>
+</tr>
+<tr class="even">
+<td align="left">prev_check</td>
+<td align="left">logical indicating if the Prerequisite Check should be triggered. Requires quest_prev value and can optionally be combined with quest_prev_status</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="odd">
+<td align="left">is_tibble_check</td>
+<td align="left">logical indicating if the tibble Structure Check should be triggered</td>
+<td align="left">TRUE</td>
+</tr>
+<tr class="even">
+<td align="left">quest_check_read</td>
+<td align="left">logical indicating if the message “Please make sure you are using read_csv(), not read.csv().” should be attached to the tibble Structure Check</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">quest_num</td>
+<td align="left">numeric, the question’s number</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">quest_pt</td>
+<td align="left">numeric, the question’s maximum score</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">quest_prev</td>
+<td align="left">numeric, the prerequisite question’s number</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">quest_prev_status</td>
+<td align="left">character, the prerequisite question’s part and number; Example: “Part 2 Question 3b”</td>
+<td align="left">NULL</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="value" class="section level3 unnumbered hasAnchor">
+<h3>Value<a href="private_grader.html#value" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The <code>test.results[#, ]</code> vector, containing the question’s <code>status</code>, amount of points awarded, total point value, and feedback message.</p>
+<p>See <a href="test.html#test.results">What is test.results?</a> for more details.</p>
+</div>
+<div id="details" class="section level3 unnumbered hasAnchor">
+<h3>Details<a href="private_grader.html#details" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="infobox imp">
+<p>Designed for grading Private Questions involving <strong>tibbles, vectors, lists, or plots only</strong>.</p>
+<p>Plot grading via <code>private_grader()</code> is limited. Consistent with previous ECON 145 autograders, full credit is awarded if the student simply names the plot properly and gets any prerequisite question correct. For more detailed feedback, consider using the <a href="ggplot_grader.html#ggplot_grader"><code>ggplot_grader()</code></a> for ggplot-type questions. See <a href="private_grader.html#private_grader-plots">Plots</a> for more information.</p>
+<p>The function grades <strong>two-way tabyl lists only</strong>. For <a href="private_tabyl_grader.html#three-way_tabyl">three-way tabyl</a> lists, please use <a href="private_tabyl_grader.html#private_tabyl_grader"><code>private_tabyl_grader()</code></a> instead.</p>
+</div>
+<p>Note that <code>var</code> is the <em>expected</em> student’s R object and may not necessarily exist (e.g., the student saved their variable under a different name).</p>
+<ul>
+<li>This is not a problem because <code>private_grader()</code> first performs the <a href="Name-Check.html#Name-Check">Name Check</a>. If <code>var</code> does not exist, the subsequent Checks will not be triggered.</li>
+</ul>
+<p>Also note that <code>quest_prev_status</code> is an <em>optional</em> argument when setting <code>prev_check</code> and <code>quest_prev</code> but helps <em>clarify</em> an unclear prerequisite question’s location in the feedback message.</p>
+<ul>
+<li>For example, if the prerequisite question is Part 2 Question 3b, but is the eighth question of the assignment (<code>quest_prev = 8</code>), this argument can specify its particular location through setting <code>quest_prev_status = “Part 2 Question 3b”</code>. Otherwise, its question’s number will be displayed (i.e., <code>"Question 8"</code>).</li>
+</ul>
+</div>
+<div id="example-1-tibble" class="section level3 unnumbered hasAnchor">
+<h3>Example 1: Tibble<a href="private_grader.html#example-1-tibble" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the following questions from Homework 14.</p>
+<p><strong>Part 1: Coding Assignment</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>First, you will combine player salary data with CPI data.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>(<em>Private Question</em>) Load in the <code>Master.csv</code> file, keeping the columns for player ID, birth year, birth country, first name, last name, weight, height, bats, throws, debut date, and final game date. Save the tibble as <strong><code>player_master_data</code></strong>.</p></li>
+<li><p>(<em>Private Question</em>) Load in the <code>Salaries.csv</code> file into R. Join the <code>player_master_data</code> tibble with the data from <code>Salaries.csv</code> by <code>playerID</code>, keeping only rows with data from both datasets. Save the resulting, joined tibble as <strong><code>player_salary_data1</code></strong>.</p></li>
+</ol></li>
+</ol>
+<p>Assume each question is worth 5 points.</p>
+<p>Then, the autograder code for this question should look like:<a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="private_grader.html#cb33-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s tibble `player_master_data` with the answer key&#39;s `player_master_data_test` </span></span>
+<span id="cb33-2"><a href="private_grader.html#cb33-2" tabindex="-1"></a><span class="co">#Since this is the first question of the assignment, there is no prerequisite check and so `prev_check` is set to `FALSE`</span></span>
+<span id="cb33-3"><a href="private_grader.html#cb33-3" tabindex="-1"></a><span class="co">#Moreover, since this question involves the loading in of a .csv file, it would be helpful to remind students to use `read_csv()` and not `read.csv()` by setting `quest_check_read` to `TRUE`</span></span>
+<span id="cb33-4"><a href="private_grader.html#cb33-4" tabindex="-1"></a>test.results[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;player_master_data&quot;</span>, player_master_data, player_master_data_test,</span>
+<span id="cb33-5"><a href="private_grader.html#cb33-5" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 1a (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;tib&quot;</span>,</span>
+<span id="cb33-6"><a href="private_grader.html#cb33-6" tabindex="-1"></a>                                    <span class="at">quest_check_read =</span> <span class="cn">TRUE</span>, <span class="at">prev_check =</span> <span class="cn">FALSE</span>, <span class="at">quest_num =</span> <span class="dv">1</span>, <span class="at">quest_pt =</span> <span class="dv">5</span>)</span>
+<span id="cb33-7"><a href="private_grader.html#cb33-7" tabindex="-1"></a></span>
+<span id="cb33-8"><a href="private_grader.html#cb33-8" tabindex="-1"></a><span class="co">#Comparing the student&#39;s tibble `player_salary_data1` with the answer key&#39;s `player_salary_data1_test` </span></span>
+<span id="cb33-9"><a href="private_grader.html#cb33-9" tabindex="-1"></a><span class="co">#This question relies on the student correctly reproducing `player_master_data` in the previous question, so `prev_check`, `quest_prev`, and `quest_prev_status` are set appropriately</span></span>
+<span id="cb33-10"><a href="private_grader.html#cb33-10" tabindex="-1"></a><span class="co">#Since this question also involves the reading in of data, `quest_check_read` is set to TRUE</span></span>
+<span id="cb33-11"><a href="private_grader.html#cb33-11" tabindex="-1"></a>test.results[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;player_salary_data1&quot;</span>, player_salary_data1, player_salary_data1_test,</span>
+<span id="cb33-12"><a href="private_grader.html#cb33-12" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 1b (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;tib&quot;</span>,</span>
+<span id="cb33-13"><a href="private_grader.html#cb33-13" tabindex="-1"></a>                                    <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_prev =</span> <span class="dv">1</span>, <span class="at">quest_prev_status =</span> <span class="st">&quot;Part 1 Question 1a&quot;</span>,</span>
+<span id="cb33-14"><a href="private_grader.html#cb33-14" tabindex="-1"></a>                                    <span class="at">quest_check_read =</span> <span class="cn">TRUE</span>, <span class="at">quest_num =</span> <span class="dv">2</span>, <span class="at">quest_pt =</span> <span class="dv">5</span>)</span></code></pre></div>
+</div>
+<div id="example-2-vectors" class="section level3 unnumbered hasAnchor">
+<h3>Example 2: Vectors<a href="private_grader.html#example-2-vectors" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the following questions from Starter Assignment 1.</p>
+<p><strong>Part 1: Numeric Object Type and Logical Operators</strong></p>
+<ol style="list-style-type: decimal">
+<li><p>(<em>Private Question</em>) Assign number <code>1.45</code> to the variable <strong><code>num_1</code></strong>. Remember that the assignment operator in R is <code>&lt;-</code>.</p></li>
+<li><p>(<em>Private Question</em>) Assign number <code>5</code> to the variable <strong><code>num_2</code></strong>.</p></li>
+</ol>
+<p>Assume each question is worth 1 point.</p>
+<p>Then, the autograder code for this question should look like:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="private_grader.html#cb34-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s vector `num_1` with the answer key&#39;s `num_1_test` </span></span>
+<span id="cb34-2"><a href="private_grader.html#cb34-2" tabindex="-1"></a><span class="co">#Since this question does not rely on another question, `prev_check` is set to `FALSE`</span></span>
+<span id="cb34-3"><a href="private_grader.html#cb34-3" tabindex="-1"></a>test.results[<span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;num_1&quot;</span>, num_1, num_1_test,</span>
+<span id="cb34-4"><a href="private_grader.html#cb34-4" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 1 (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;vect&quot;</span>,</span>
+<span id="cb34-5"><a href="private_grader.html#cb34-5" tabindex="-1"></a>                                    <span class="at">prev_check =</span> <span class="cn">FALSE</span>, <span class="at">quest_num =</span> <span class="dv">1</span>, <span class="at">quest_pt =</span> <span class="dv">1</span>)</span>
+<span id="cb34-6"><a href="private_grader.html#cb34-6" tabindex="-1"></a>  </span>
+<span id="cb34-7"><a href="private_grader.html#cb34-7" tabindex="-1"></a><span class="co">#Comparing the student&#39;s vector `num_2` with the answer key&#39;s `num_2_test` </span></span>
+<span id="cb34-8"><a href="private_grader.html#cb34-8" tabindex="-1"></a><span class="co">#`prev_check` is set similarly</span></span>
+<span id="cb34-9"><a href="private_grader.html#cb34-9" tabindex="-1"></a>test.results[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;num_2&quot;</span>, num_2, num_2_test,</span>
+<span id="cb34-10"><a href="private_grader.html#cb34-10" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 2 (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;vect&quot;</span>,</span>
+<span id="cb34-11"><a href="private_grader.html#cb34-11" tabindex="-1"></a>                                    <span class="at">prev_check =</span> <span class="cn">FALSE</span>, <span class="at">quest_num =</span> <span class="dv">2</span>, <span class="at">quest_pt =</span> <span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="example-3-lists" class="section level3 unnumbered hasAnchor">
+<h3>Example 3: Lists<a href="private_grader.html#example-3-lists" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Consider the following questions from Homework 7.</p>
+<p><strong>Part 1: Coding Assignment</strong></p>
+<ol start="8" style="list-style-type: decimal">
+<li><p>(<em>Private Question</em>) Using <code>crimeData</code>, create a table called <strong><code>age_bin_by_crime_percentages</code></strong> that shows what percent of crime experienced by each age bin that is violent or nonviolent. Your table should have a column each for violent and nonviolent crimes and a row for each age bin as well as a row for the total across all age bins.</p></li>
+<li><p>(<em>Private Question</em>) Using <code>crimeData</code>, create a table called <strong><code>crime_by_age_bin_percentages</code></strong> that shows the percent of violent and nonviolent crimes that occurred in each age bin. Your table should have a column for each age bin and a row each for violent and nonviolent crimes. You should also have a row for the total for each age bin.</p></li>
+</ol>
+<p>Assume each question is worth 10 points and that <code>crimeData</code> was created in Question 6.</p>
+<p>Then, the autograder code for these questions should look:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="private_grader.html#cb35-1" tabindex="-1"></a><span class="co">#Note: Tables (especially those created with `janitor::tabyl()`) should be classified as lists (&quot;lst&quot;) when using `private_grader()`</span></span>
+<span id="cb35-2"><a href="private_grader.html#cb35-2" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="private_grader.html#cb35-3" tabindex="-1"></a><span class="co">#Comparing the student&#39;s list `age_bin_by_crime_percentages` with the answer key&#39;s `age_bin_by_crime_percentages_test` </span></span>
+<span id="cb35-4"><a href="private_grader.html#cb35-4" tabindex="-1"></a><span class="co">#Since this question relies on `crimeData` being correct, `prev_check` and `quest_prev` are set appropriately (`quest_prev_status` is omitted)</span></span>
+<span id="cb35-5"><a href="private_grader.html#cb35-5" tabindex="-1"></a>test.results[<span class="dv">8</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;age_bin_by_crime_percentages&quot;</span>, age_bin_by_crime_percentages, age_bin_by_crime_percentages_test, </span>
+<span id="cb35-6"><a href="private_grader.html#cb35-6" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 8 (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;lst&quot;</span>, </span>
+<span id="cb35-7"><a href="private_grader.html#cb35-7" tabindex="-1"></a>                                    <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_num =</span> <span class="dv">8</span>, <span class="at">quest_pt =</span> <span class="dv">10</span>, <span class="at">quest_prev =</span> <span class="dv">6</span>)</span>
+<span id="cb35-8"><a href="private_grader.html#cb35-8" tabindex="-1"></a></span>
+<span id="cb35-9"><a href="private_grader.html#cb35-9" tabindex="-1"></a><span class="co">#Comparing the student&#39;s list `crime_by_age_bin_percentages` with the answer key&#39;s `crime_by_age_bin_percentages_test` </span></span>
+<span id="cb35-10"><a href="private_grader.html#cb35-10" tabindex="-1"></a><span class="co">#`prev_check` and `quest_prev` are set appropriately (`quest_prev_status` is omitted)</span></span>
+<span id="cb35-11"><a href="private_grader.html#cb35-11" tabindex="-1"></a>test.results[<span class="dv">9</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;crime_by_age_bin_percentages&quot;</span>, crime_by_age_bin_percentages, crime_by_age_bin_percentages_test, </span>
+<span id="cb35-12"><a href="private_grader.html#cb35-12" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 9 (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;lst&quot;</span>, </span>
+<span id="cb35-13"><a href="private_grader.html#cb35-13" tabindex="-1"></a>                                    <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_num =</span> <span class="dv">9</span>, <span class="at">quest_pt =</span> <span class="dv">10</span>, <span class="at">quest_prev =</span> <span class="dv">6</span>)</span></code></pre></div>
+</div>
+<div id="private_grader-plots" class="section level3 unnumbered hasAnchor">
+<h3>Example 4: Plots<a href="private_grader.html#private_grader-plots" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="background" class="section level4 unnumbered hasAnchor">
+<h4>Background<a href="private_grader.html#background" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Previously in ECON 145, plots have not been <em>rigorously graded</em> by the autograder due to the desire to award credit to a wide range of students’ plots that closely resemble, but are not identical to, the solution.</p>
+<ul>
+<li><p>Accordingly, <code>private_grader()</code> only performs the <a href="Prerequisite-Check.html#Prerequisite-Check">Prerequisite Check</a> and <a href="Name-Check.html#Name-Check">Name Check</a> when grading plots. If the student’s plot bypasses these Checks, full credit is awarded. Afterwards, plots are <em>manually graded</em> by the TAs in the students’ write-ups.</p></li>
+<li><p><code>ggplot_grader()</code> was made in an attempt to provide some level of Checks and feedback for plots created through the <code>ggplot2</code> package. See <a href="ggplot_grader.html#ggplot_grader"><code>ggplot_grader()</code></a> for details.</p></li>
+</ul>
+<p>Now consider the hypothetical homework question:</p>
+<p><strong>Part 1: Coding Assignment</strong></p>
+<ol start="2" style="list-style-type: decimal">
+<li>(<em>Private Question</em>) Using <code>basketball_data</code> from Question 1, create a scatter plot of points (<code>pt</code>) versus assists (<code>ast</code>). Save the plot as <strong><code>basketball_scatter</code></strong>.</li>
+</ol>
+<p>Assume this question is worth 5 points.</p>
+<p>Then, the autograder code for this question should look like:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="private_grader.html#cb36-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s plot `basketball_scatter` with the answer key&#39;s `basketball_scatter_test` </span></span>
+<span id="cb36-2"><a href="private_grader.html#cb36-2" tabindex="-1"></a><span class="co">#Since this question relies on `basketball_data` being correct, `prev_check` and `quest_prev` are set appropriately (`quest_prev_status` is omitted)</span></span>
+<span id="cb36-3"><a href="private_grader.html#cb36-3" tabindex="-1"></a>test.results[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">private_grader</span>(<span class="st">&quot;basketball_scatter&quot;</span>, basketball_scatter, basketball_scatter_test,</span>
+<span id="cb36-4"><a href="private_grader.html#cb36-4" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 2 (Private)&quot;</span>, <span class="at">var_status =</span> <span class="st">&quot;plt&quot;</span>,</span>
+<span id="cb36-5"><a href="private_grader.html#cb36-5" tabindex="-1"></a>                                    <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_num =</span> <span class="dv">2</span>, <span class="at">quest_pt =</span> <span class="dv">5</span>, <span class="at">quest_prev =</span> <span class="dv">1</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="acknowledgements" class="section level3 unnumbered hasAnchor">
+<h3>Acknowledgements<a href="private_grader.html#acknowledgements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><strong>Author</strong>: Riley Berman</p>
+<p><strong>Contributors</strong>: Alex Zhao, Jack Keefer, Shreya Sinha, Michal Snopek</p>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="4">
+<li id="fn4"><p>While manipulation of the default parameters can allow <code>private_grader()</code> to be implemented with fewer explicit inputs, it is recommended to explicitly define <em>at least</em> the parameters included in these examples for clarity and consistency.<a href="private_grader.html#fnref4" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="Private-Questions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="ggplot_grader.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"edit": {
+"link": "https://github.com/RileyBerman/UCSB-ECON145-AutograderManual/edit/BRANCH/%s",
+"text": "Suggest an edit"
+}
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
