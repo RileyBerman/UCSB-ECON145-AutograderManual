@@ -1,7 +1,5 @@
-book_filename: "bookdown-start"
+book_filename: "UCSB-ECON145-AutograderManual"
 chapter_name: "Chapter "
-repo: https://github.com/seankross/bookdown-start
+repo: https://github.com/RileyBerman/UCSB-ECON145-AutograderManual
 output_dir: docs
-rmd_files: ["index.Rmd", "01-Introduction.Rmd", "02-Diving-In.Rmd"]
 clean: [packages.bib, bookdown.bbl]
-new_session: yes
