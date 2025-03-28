@@ -1,1 +1,73 @@
 \usepackage{booktabs}
+\usepackage{tcolorbox}
+\usepackage{ifthen}
+\usepackage{graphicx}
+\usepackage{framed,color}
+\usepackage{fvextra}
+\usepackage{titlesec}
+\usepackage{longtable} 
+
+\usepackage{Alegreya} 
+\usepackage[scale=.7]{sourcecodepro}
+
+\renewenvironment{figure}
+  {\begin{figure}\centering}
+  {\end{figure}}
+
+\definecolor{definition_frame}{RGB}{50, 84, 129}
+\definecolor{definition_color}{RGB}{218, 228, 242}
+\definecolor{important_frame}{RGB}{196, 184, 16}
+\definecolor{important_color}{RGB}{247, 247, 208}
+\definecolor{note_frame}{RGB}{27, 5, 5}
+\definecolor{note_color}{RGB}{224, 224, 224}
+\definecolor{warning_frame}{RGB}{232, 27, 27}
+\definecolor{warning_color}{RGB}{253, 174, 174}
+
+\newenvironment{infobox}[1] 
+  {
+  \begin{itemize}
+  \renewcommand{\labelitemi}{
+    \raisebox{-.4\height}[0pt][0pt]{
+      {\setkeys{Gin}{width=2.5em,keepaspectratio}
+      \includegraphics{images/#1}}
+    }
+  }
+  \setlength{\fboxsep}{1em}
+
+  \ifthenelse{\equal{#1}{magnifying_glass}}{
+    \begin{tcolorbox}[colback=definition_color, colframe=definition_frame, coltext=black, top=10pt, bottom=10pt, left=35pt, right=10pt, arc=4pt, before skip=10pt, after skip=10pt]
+    \setlength{\parskip}{1.5ex}
+    \setlength{\parindent}{0pt} 
+  }{
+    \ifthenelse{\equal{#1}{important_exclamation}}{
+      \begin{tcolorbox}[colback=important_color, colframe=important_frame, coltext=black, top=10pt, bottom=10pt, left=45pt, right=10pt, arc=4pt, before skip=10pt, after skip=10pt]
+      \setlength{\parskip}{1.5ex}
+      \setlength{\parindent}{0pt} 
+    }{
+      \ifthenelse{\equal{#1}{bell_note}}{
+        \begin{tcolorbox}[colback=note_color, colframe=note_frame, coltext=black, top=10pt, bottom=10pt, left=40pt, right=10pt, arc=4pt, before skip=10pt, after skip=10pt]
+        \setlength{\parskip}{1.5ex}
+        \setlength{\parindent}{0pt} 
+      }{
+        \begin{tcolorbox}[colback=warning_color, colframe=warning_frame, coltext=black, top=10pt, bottom=10pt, left=45pt, right=10pt, arc=4pt, before skip=10pt, after skip=10pt]
+        \setlength{\parskip}{1.5ex}
+        \setlength{\parindent}{0pt} 
+      }
+    }
+  }
+  \item
+  }
+  {
+  \end{tcolorbox}
+  \end{itemize}
+}
+
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{
+    commandchars=\\\{\},
+    breaklines, breaknonspaceingroup, breakanywhere}
+    
+\let\cleardoublepage\clearpage
+
+\titleformat{\chapter}[hang]
+  {\normalfont\huge\bfseries}{\thechapter}{2em}{}
+\titlespacing*{\chapter}{0pt}{\baselineskip}{0.5\baselineskip}
