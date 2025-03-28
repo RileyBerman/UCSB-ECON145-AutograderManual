@@ -26,28 +26,28 @@ pre code {
 .def {
   border: 2px solid #325481;
   background:#DAE4F2 5px center/3em no-repeat;
-  background-image: url("images/magnifying_glass.png");
+  background-image: url("../images/magnifying_glass.png");
   background-position: 5px 5px;
 }
 
 .imp {
   border: 2px solid #C4B810; 
   background: #F7F7D0 5px center/3em no-repeat;
-  background-image: url("images/important_exclamation.png");
+  background-image: url("../images/important_exclamation.png");
   background-position: 5px 5px;
 }
 
 .note {
   border: 2px solid #1B0505; 
   background: #E0E0E0 5px center/3em no-repeat;
-  background-image: url("images/bell_note.png");
+  background-image: url("../images/bell_note.png");
   background-position: 5px 5px;
 }
 
 .warning {
   border: 2px solid #E81B1B;  
   background: #FDAEAE 5px center/3em no-repeat;
-  background-image: url("images/warning.png");
+  background-image: url("../images/warning.png");
   background-position: 5px 5px;
 }
 

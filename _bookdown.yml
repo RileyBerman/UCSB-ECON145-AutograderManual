@@ -1,5 +1,6 @@
 book_filename: "UCSB-ECON145-AutograderManual"
 chapter_name: "Chapter "
+delete_merged_file: true
 repo: https://github.com/RileyBerman/UCSB-ECON145-AutograderManual
 output_dir: docs
 clean: [packages.bib, bookdown.bbl]
