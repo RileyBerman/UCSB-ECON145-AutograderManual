@@ -1,5 +1,5 @@
 --- 
-title: "UCSB ECON 145 Autograder Manual 2024"
+title: "UCSB ECON 145 Autograder Manual"
 author: "Riley Berman, Alex Zhao, & 2024 ECON 145 Summer Team"
 date: 'Last Updated: `r Sys.Date()`'
 site: bookdown::bookdown_site
