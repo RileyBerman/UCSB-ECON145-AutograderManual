@@ -1,4 +1,33 @@
-# Introduction
+# Introduction {#Introduction}
 
-This is the first real chapter.
+This manual explains how to build an autograder for [UCSB ECON 145](https://econ.ucsb.edu/programs/undergraduate/courses) coding assignments. 
 
+:::: {.infobox .def data-latex="{magnifying_glass}"}
+
+**WHAT IS AN AUTOGRADER?**
+
+In this manual, an *autograder*, or *autograder program*, is an R script that grades a student's R-based assignment and provides question-specific feedback. It runs alongside a set of supporting R scripts, collectively known as the *autograder infrastructure.*
+
+See [Autograder Conventions](#Autograder-Conventions) for more details.
+
+::::
+
+In ECON 145 assignments, coding questions are classified as either [**Public**](#Public-Questions) or [**Private**](#Private-Questions). 
+
+-   For any Public Question, we write custom "Checks" -- lines of code that test for specific answer attributes -- that evaluate the student's answer and return *constructive and dynamic feedback*. 
+
+-   For any Private Question, we use a set of premade functions that evaluate the student's answer and return *necessary and basic feedback*. 
+
+Accordingly, most of this manual focuses on writing Checks for Public Questions. 
+
+We will look at grading four types of data structures: tibbles, vectors, lists, and plots. Moreover, as the majority of ECON 145 assignment questions are tibble-based, we  direct our attention to grading tibbles. 
+
+For fellow ECON 145 TAs, we recommend skimming through `00-manual1.pdf` and  `how_to_create_an_autograder_2024.pdf` for an overview of the autograder infrastructure.
+
+:::: {.infobox .note data-latex="{bell_note}"}
+
+**Note**: 
+
+Unless noted, all references and examples come from the Fall 2024 ECON 145 course. 
+
+::::

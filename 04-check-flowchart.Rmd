@@ -1,0 +1,75 @@
+# Check Flowchart {#Check-Flowchart}
+
+The flowchart below outlines the recommended order for [General](#General-Checks) and [Special Checks](#Special-Checks) when building the autograder script for a Public Question. 
+
+Red arrows flowing to a Check indicate its **dependency on previous Checks.**
+
+:::: {.infobox .note data-latex="{bell_note}"}
+
+**Note**: 
+
+This sequence is flexible. Experienced TAs can reorder Checks to suit the logic of a specific question -- *so long as dependencies are preserved*. 
+
+::::
+
+\newpage 
+
+```{r, echo=FALSE, warning=FALSE, fig.align="center"}
+
+library(DiagrammeR)
+
+DiagrammeR::grViz("digraph {
+  
+graph[layout = dot, rankdir = TB]
+
+node [fontname = Verdana, shape = ellipse, style = rounded, height = 1.5, width = 1.5, style = filled, fillcolor = Orange]
+
+Check1 [label = 'Prerequisite \n Check', fillcolor = LightBlue]
+
+Check2 [label = 'Name \n Check', fillcolor = LightBlue]
+
+Check3 [label = 'Structure \n Check', fillcolor = LightBlue]
+
+Check4 [label = 'Column Name \n Check', fillcolor = LightBlue]
+
+Check5 [label = 'Type \n Check']
+
+Check6 [label = 'Expression \n Check']
+
+Check7 [label = 'Calculation \n Check']
+
+Check8 [label = 'Value \n Check']
+
+Check9 [label = 'NA \n Check']
+
+Check10 [label = 'Row & Column \n Check', fillcolor = LightBlue]
+
+Check11 [label = 'Correct \n Check', fillcolor = LightBlue]
+
+Check1 -> Check2 
+
+Check2 -> Check3 [color = red3]
+
+Check3 -> Check4 [color = red3]
+
+Check4 -> Check8 [color = red3]
+
+Check4 -> {Check5, Check6, Check9} [color = red3]
+
+Check5 -> Check7 [color = red3]
+
+{Check7, Check6, Check9} -> Check8
+
+Check8 ->  Check10
+
+Check10 -> Check11 [color = red3]
+
+ColExplanation1 [label = '\\lGeneral Check', shape = plaintext, fontcolor = LightBlue, width = 0, height = 0, fillcolor = Transparent, fontname = 'Verdana-Bold']
+
+ColExplanation2 [label = '\\lSpecial Check', shape = plaintext, fontcolor = Orange, width = 0, height = 0, fillcolor = Transparent, fontname = 'Verdana-Bold', align = 'left']
+
+{rank = same; Check5; ColExplanation2}
+
+}", height = 1000)
+
+```
