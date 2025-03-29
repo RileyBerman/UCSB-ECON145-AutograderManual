@@ -1,4 +1,4 @@
-# Introduction {#Introduction}
+# Introduction 
 
 This manual explains how to build an autograder for [UCSB ECON 145](https://econ.ucsb.edu/programs/undergraduate/courses) coding assignments. 
 
