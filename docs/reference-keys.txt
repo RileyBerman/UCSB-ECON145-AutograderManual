@@ -1,4 +1,4 @@
-Introduction
+introduction
 Autograder-Conventions
 general-structure
 test.results
