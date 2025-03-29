@@ -3,4 +3,8 @@ chapter_name: "Chapter "
 delete_merged_file: true
 repo: https://github.com/RileyBerman/UCSB-ECON145-AutograderManual
 output_dir: docs
+rmd_files: ["index.Rmd", "01-introduction.Rmd", "02-autograder-conventions.Rmd", "03-public-questions.Rmd", 
+            "04-check-flowchart.Rmd", "05-putting-it-all-together.Rmd", "06-private-questions.Rmd", 
+            "07-DGP.R.Rmd", "08-references.Rmd"]
 clean: [packages.bib, bookdown.bbl]
+new_session: yes
