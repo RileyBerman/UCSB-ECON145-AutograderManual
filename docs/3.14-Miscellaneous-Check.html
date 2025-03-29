@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="3.14 Miscellaneous Checks (S) | UCSB ECON 145 Autograder Manual" />
+<meta property="og:type" content="book" />
+
+<meta property="og:description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
+
+
+<meta name="author" content="Riley Berman, Alex Zhao, &amp; 2024 ECON 145 Summer Team" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder.">
+
+<title>3.14 Miscellaneous Checks (S) | UCSB ECON 145 Autograder Manual</title>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+/* show arrow before summary tag as in bootstrap
+TODO: remove if bootstrap in updated in html_document (rmarkdown#1485) */
+details > summary {
+  display: list-item;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface" id="toc-preface">Preface</a>
+<ul>
+<li><a href="Acknowledgements.html#Acknowledgements" id="toc-Acknowledgements">Acknowledgements</a></li>
+</ul></li>
+<li><a href="1-Introduction.html#Introduction" id="toc-Introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="2-Autograder-Conventions.html#Autograder-Conventions" id="toc-Autograder-Conventions"><span class="toc-section-number">2</span> Autograder Conventions</a>
+<ul>
+<li><a href="2.1-general-structure.html#general-structure" id="toc-general-structure"><span class="toc-section-number">2.1</span> General Structure</a></li>
+<li><a href="2.2-test.html#test.results" id="toc-test.results"><span class="toc-section-number">2.2</span> What is test.results?</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-Public-Questions.html#Public-Questions" id="toc-Public-Questions"><span class="toc-section-number">3</span> Public Questions</a>
+<ul>
+<li><a href="3.1-general-form.html#general-form" id="toc-general-form"><span class="toc-section-number">3.1</span> General Form</a></li>
+<li><a href="3.2-Name-Check.html#Name-Check" id="toc-Name-Check"><span class="toc-section-number">3.2</span> Name Check (G)</a></li>
+<li><a href="3.3-Prerequisite-Check.html#Prerequisite-Check" id="toc-Prerequisite-Check"><span class="toc-section-number">3.3</span> Prerequisite Check (G)</a></li>
+<li><a href="3.4-Structure-Check.html#Structure-Check" id="toc-Structure-Check"><span class="toc-section-number">3.4</span> Structure Check (G)</a></li>
+<li><a href="3.5-Column-Name-Check.html#Column-Name-Check" id="toc-Column-Name-Check"><span class="toc-section-number">3.5</span> Column Name Check (G)</a></li>
+<li><a href="3.6-Row-Column-Check.html#Row-Column-Check" id="toc-Row-Column-Check"><span class="toc-section-number">3.6</span> Row &amp; Column Check (G)</a></li>
+<li><a href="3.7-Correct-Check.html#Correct-Check" id="toc-Correct-Check"><span class="toc-section-number">3.7</span> Correct Check (G)</a></li>
+<li><a href="3.8-PERMID-Check.html#PERMID-Check" id="toc-PERMID-Check"><span class="toc-section-number">3.8</span> PERMID Check (G)</a></li>
+<li><a href="3.9-Type-Check.html#Type-Check" id="toc-Type-Check"><span class="toc-section-number">3.9</span> Type Check (S)</a></li>
+<li><a href="3.10-Value-Check.html#Value-Check" id="toc-Value-Check"><span class="toc-section-number">3.10</span> Value Check (S)</a></li>
+<li><a href="3.11-Calculation-Check.html#Calculation-Check" id="toc-Calculation-Check"><span class="toc-section-number">3.11</span> Calculation Check (S)</a></li>
+<li><a href="3.12-NA-Check.html#NA-Check" id="toc-NA-Check"><span class="toc-section-number">3.12</span> NA Check (S)</a></li>
+<li><a href="3.13-Expression-Check.html#Expression-Check" id="toc-Expression-Check"><span class="toc-section-number">3.13</span> Expression Check (S)</a></li>
+<li><a href="3.14-Miscellaneous-Check.html#Miscellaneous-Check" id="toc-Miscellaneous-Check"><span class="toc-section-number">3.14</span> Miscellaneous Checks (S)</a></li>
+<li><a href="3.15-dynamic-checks.html#dynamic-checks" id="toc-dynamic-checks"><span class="toc-section-number">3.15</span> Dynamic Checks</a></li>
+</ul></li>
+<li><a href="4-Check-Flowchart.html#Check-Flowchart" id="toc-Check-Flowchart"><span class="toc-section-number">4</span> Check Flowchart</a></li>
+<li class="has-sub"><a href="5-Putting-It-All-Together.html#Putting-It-All-Together" id="toc-Putting-It-All-Together"><span class="toc-section-number">5</span> Putting It All Together</a>
+<ul>
+<li><a href="5.1-example-tibble.html#example-tibble" id="toc-example-tibble"><span class="toc-section-number">5.1</span> Example: Tibble</a></li>
+<li><a href="5.2-example-vector.html#example-vector" id="toc-example-vector"><span class="toc-section-number">5.2</span> Example: Vector</a></li>
+<li><a href="5.3-example-list.html#example-list" id="toc-example-list"><span class="toc-section-number">5.3</span> Example: List</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-Private-Questions.html#Private-Questions" id="toc-Private-Questions"><span class="toc-section-number">6</span> Private Questions</a>
+<ul>
+<li class="has-sub"><a href="6.1-private_grader.html#private_grader" id="toc-private_grader"><span class="toc-section-number">6.1</span> private_grader()</a>
+<ul>
+<li><a href="6.1-private_grader.html#description" id="toc-description">Description</a></li>
+<li><a href="6.1-private_grader.html#usage" id="toc-usage">Usage</a></li>
+<li><a href="6.1-private_grader.html#arguments" id="toc-arguments">Arguments</a></li>
+<li><a href="6.1-private_grader.html#value" id="toc-value">Value</a></li>
+<li><a href="6.1-private_grader.html#details" id="toc-details">Details</a></li>
+<li><a href="6.1-private_grader.html#example-1-tibble" id="toc-example-1-tibble">Example 1: Tibble</a></li>
+<li><a href="6.1-private_grader.html#example-2-vectors" id="toc-example-2-vectors">Example 2: Vectors</a></li>
+<li><a href="6.1-private_grader.html#example-3-lists" id="toc-example-3-lists">Example 3: Lists</a></li>
+<li><a href="6.1-private_grader.html#private_grader-plots" id="toc-private_grader-plots">Example 4: Plots</a></li>
+<li><a href="6.1-private_grader.html#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+</ul></li>
+<li class="has-sub"><a href="6.2-ggplot_grader.html#ggplot_grader" id="toc-ggplot_grader"><span class="toc-section-number">6.2</span> ggplot_grader()</a>
+<ul>
+<li><a href="6.2-ggplot_grader.html#description-1" id="toc-description-1">Description</a></li>
+<li><a href="6.2-ggplot_grader.html#usage-1" id="toc-usage-1">Usage</a></li>
+<li><a href="6.2-ggplot_grader.html#arguments-1" id="toc-arguments-1">Arguments</a></li>
+<li><a href="6.2-ggplot_grader.html#value-1" id="toc-value-1">Value</a></li>
+<li><a href="6.2-ggplot_grader.html#details-1" id="toc-details-1">Details</a></li>
+<li><a href="6.2-ggplot_grader.html#example-1" id="toc-example-1">Example 1</a></li>
+<li><a href="6.2-ggplot_grader.html#example-2" id="toc-example-2">Example 2</a></li>
+<li><a href="6.2-ggplot_grader.html#example-3" id="toc-example-3">Example 3</a></li>
+<li><a href="6.2-ggplot_grader.html#example-4" id="toc-example-4">Example 4</a></li>
+<li><a href="6.2-ggplot_grader.html#acknowledgements-1" id="toc-acknowledgements-1">Acknowledgements</a></li>
+</ul></li>
+<li class="has-sub"><a href="6.3-private_tabyl_grader.html#private_tabyl_grader" id="toc-private_tabyl_grader"><span class="toc-section-number">6.3</span> private_tabyl_grader()</a>
+<ul>
+<li><a href="6.3-private_tabyl_grader.html#description-2" id="toc-description-2">Description</a></li>
+<li><a href="6.3-private_tabyl_grader.html#usage-2" id="toc-usage-2">Usage</a></li>
+<li><a href="6.3-private_tabyl_grader.html#arguments-2" id="toc-arguments-2">Arguments</a></li>
+<li><a href="6.3-private_tabyl_grader.html#value-2" id="toc-value-2">Value</a></li>
+<li><a href="6.3-private_tabyl_grader.html#details-2" id="toc-details-2">Details</a></li>
+<li><a href="6.3-private_tabyl_grader.html#example" id="toc-example">Example</a></li>
+<li><a href="6.3-private_tabyl_grader.html#acknowledgements-2" id="toc-acknowledgements-2">Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="7-DGP.html#DGP.R" id="toc-DGP.R"><span class="toc-section-number">7</span> DGP.R</a>
+<ul>
+<li class="has-sub"><a href="7.1-examples.html#examples" id="toc-examples"><span class="toc-section-number">7.1</span> Examples</a>
+<ul>
+<li><a href="7.1-examples.html#example-1-1" id="toc-example-1-1">Example 1</a></li>
+<li><a href="7.1-examples.html#example-2-1" id="toc-example-2-1">Example 2</a></li>
+<li><a href="7.1-examples.html#example-3-1" id="toc-example-3-1">Example 3</a></li>
+<li><a href="7.1-examples.html#example-4-1" id="toc-example-4-1">Example 4</a></li>
+<li><a href="7.1-examples.html#example-5" id="toc-example-5">Example 5</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references" id="toc-references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="Miscellaneous-Check" class="section level2" number="3.14">
+<h2><span class="header-section-number">3.14</span> Miscellaneous Checks (S)</h2>
+<p>The following are some highly specific Special Checks that fall outside the common categories. While they may not be practical, their structure could serve as a reference when creating your own custom Special Checks.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="3.14-Miscellaneous-Check.html#cb24-1" tabindex="-1"></a><span class="co">#Miscellaneous Check Examples (with example hints)</span></span>
+<span id="cb24-2"><a href="3.14-Miscellaneous-Check.html#cb24-2" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="3.14-Miscellaneous-Check.html#cb24-3" tabindex="-1"></a><span class="co">#Example 1 (From HW 6, Q3): Checking if the column `mocodes` has correctly split its observations into multiple columns (named `mocodes_1`, `mocodes_2`, etc.) that each contain at most only one 4-digit M.O. code (e.g., the entry &quot;1049 1304 1000&quot; should be split into &quot;1049&quot; in `mocodes_1`, &quot;1304&quot; in `mocodes_2`, and &quot;1000&quot; in `mocodes_3`). The `separate_wider_delim()` function would be optimal to achieve this. </span></span>
+<span id="cb24-4"><a href="3.14-Miscellaneous-Check.html#cb24-4" tabindex="-1"></a><span class="co">#Column Check </span></span>
+<span id="cb24-5"><a href="3.14-Miscellaneous-Check.html#cb24-5" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(<span class="fu">ncol</span>(variable_name) <span class="sc">!=</span> <span class="fu">ncol</span>(variable_name_test)){ </span>
+<span id="cb24-6"><a href="3.14-Miscellaneous-Check.html#cb24-6" tabindex="-1"></a>  <span class="co">#Checks if each mocodes column has at most one M.O. code (4 digits long)</span></span>
+<span id="cb24-7"><a href="3.14-Miscellaneous-Check.html#cb24-7" tabindex="-1"></a>  <span class="co">#Checks for a mistaken `delim` argument</span></span>
+<span id="cb24-8"><a href="3.14-Miscellaneous-Check.html#cb24-8" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">any</span>(<span class="fu">str_detect</span>(<span class="fu">colnames</span>(variable_name), <span class="st">&quot;mocodes&quot;</span>))){</span>
+<span id="cb24-9"><a href="3.14-Miscellaneous-Check.html#cb24-9" tabindex="-1"></a>    mocodes_col <span class="ot">&lt;-</span> variable_name <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">&quot;mocodes&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">mutate_all</span>(<span class="sc">~</span> <span class="fu">str_detect</span>(., <span class="st">&quot;</span><span class="sc">\\</span><span class="st">d.*</span><span class="sc">\\</span><span class="st">d.*</span><span class="sc">\\</span><span class="st">d.*</span><span class="sc">\\</span><span class="st">d.*</span><span class="sc">\\</span><span class="st">d&quot;</span>)) <span class="sc">|&gt;</span> <span class="fu">colSums</span>(., <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb24-10"><a href="3.14-Miscellaneous-Check.html#cb24-10" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">sum</span>(<span class="fu">as.vector</span>(mocodes_col), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">&gt;</span> <span class="dv">0</span>){</span>
+<span id="cb24-11"><a href="3.14-Miscellaneous-Check.html#cb24-11" tabindex="-1"></a>      test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Each `mocodes` column should have at most one M.O. code. Hint: Look at the argument `delim` in `separate_wider_delim()`.&quot;</span></span>
+<span id="cb24-12"><a href="3.14-Miscellaneous-Check.html#cb24-12" tabindex="-1"></a>    }</span>
+<span id="cb24-13"><a href="3.14-Miscellaneous-Check.html#cb24-13" tabindex="-1"></a>  }</span>
+<span id="cb24-14"><a href="3.14-Miscellaneous-Check.html#cb24-14" tabindex="-1"></a>  <span class="cf">else</span>{</span>
+<span id="cb24-15"><a href="3.14-Miscellaneous-Check.html#cb24-15" tabindex="-1"></a>    test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;`variable_name` has the incorrect number of columns. Hint: Look at the function `separate_wider_delim()`.&quot;</span></span>
+<span id="cb24-16"><a href="3.14-Miscellaneous-Check.html#cb24-16" tabindex="-1"></a>  }</span>
+<span id="cb24-17"><a href="3.14-Miscellaneous-Check.html#cb24-17" tabindex="-1"></a>}</span>
+<span id="cb24-18"><a href="3.14-Miscellaneous-Check.html#cb24-18" tabindex="-1"></a><span class="co">#Column Name Check  </span></span>
+<span id="cb24-19"><a href="3.14-Miscellaneous-Check.html#cb24-19" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(<span class="sc">!</span><span class="fu">all</span>(<span class="fu">colnames</span>(variable_name_test) <span class="sc">%in%</span> <span class="fu">colnames</span>(variable_name))){</span>
+<span id="cb24-20"><a href="3.14-Miscellaneous-Check.html#cb24-20" tabindex="-1"></a>  <span class="co">#Checks for a mistaken `names_sep` argument </span></span>
+<span id="cb24-21"><a href="3.14-Miscellaneous-Check.html#cb24-21" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">any</span>(<span class="sc">!</span><span class="fu">str_detect</span>(<span class="fu">colnames</span>(variable_name)[<span class="fu">str_detect</span>(<span class="fu">colnames</span>(variable_name), <span class="st">&quot;mocodes&quot;</span>)], <span class="st">&quot;_&quot;</span>))){</span>
+<span id="cb24-22"><a href="3.14-Miscellaneous-Check.html#cb24-22" tabindex="-1"></a>    test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Every `mocodes` column should have an `_` between `mocodes` and its corresponding number. Hint: Look at the argument `names_sep` in `separate_wider_delim().`&quot;</span></span>
+<span id="cb24-23"><a href="3.14-Miscellaneous-Check.html#cb24-23" tabindex="-1"></a>  } </span>
+<span id="cb24-24"><a href="3.14-Miscellaneous-Check.html#cb24-24" tabindex="-1"></a>  <span class="cf">else</span>{</span>
+<span id="cb24-25"><a href="3.14-Miscellaneous-Check.html#cb24-25" tabindex="-1"></a>    test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">&quot;The following column(s) should be in `variable_name`, but they were not found in your answer:&quot;</span>,</span>
+<span id="cb24-26"><a href="3.14-Miscellaneous-Check.html#cb24-26" tabindex="-1"></a>                                   <span class="fu">colnames</span>(variable_name_test)[<span class="sc">!</span>(<span class="fu">colnames</span>(variable_name_test) <span class="sc">%in%</span> <span class="fu">colnames</span>(variable_name))]),</span>
+<span id="cb24-27"><a href="3.14-Miscellaneous-Check.html#cb24-27" tabindex="-1"></a>                                   <span class="at">collapse =</span> <span class="st">&quot;  &quot;</span>), <span class="st">&quot;. Hint: Look at the function `separate_wider_delim().`&quot;</span>)</span>
+<span id="cb24-28"><a href="3.14-Miscellaneous-Check.html#cb24-28" tabindex="-1"></a>  }</span>
+<span id="cb24-29"><a href="3.14-Miscellaneous-Check.html#cb24-29" tabindex="-1"></a>}</span>
+<span id="cb24-30"><a href="3.14-Miscellaneous-Check.html#cb24-30" tabindex="-1"></a></span>
+<span id="cb24-31"><a href="3.14-Miscellaneous-Check.html#cb24-31" tabindex="-1"></a><span class="co">#Example 2 (From H14, Q4a): Dynamically checking if a column contains the correct values (there are 4 different values/rows): </span></span>
+<span id="cb24-32"><a href="3.14-Miscellaneous-Check.html#cb24-32" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(<span class="sc">!</span><span class="fu">isTRUE</span>(<span class="fu">all.equal</span>(variable_name<span class="sc">$</span>column_name <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">na.last =</span> T), variable_name_test<span class="sc">$</span>column_name <span class="sc">|&gt;</span> <span class="fu">sort</span>(<span class="at">na.last =</span> T)))){</span>
+<span id="cb24-33"><a href="3.14-Miscellaneous-Check.html#cb24-33" tabindex="-1"></a>    </span>
+<span id="cb24-34"><a href="3.14-Miscellaneous-Check.html#cb24-34" tabindex="-1"></a>  check_names <span class="ot">&lt;-</span> variable_name<span class="sc">$</span>column_name</span>
+<span id="cb24-35"><a href="3.14-Miscellaneous-Check.html#cb24-35" tabindex="-1"></a>    </span>
+<span id="cb24-36"><a href="3.14-Miscellaneous-Check.html#cb24-36" tabindex="-1"></a>  correct_names <span class="ot">&lt;-</span> variable_name_test<span class="sc">$</span>column_name</span>
+<span id="cb24-37"><a href="3.14-Miscellaneous-Check.html#cb24-37" tabindex="-1"></a>    </span>
+<span id="cb24-38"><a href="3.14-Miscellaneous-Check.html#cb24-38" tabindex="-1"></a>  correct_check <span class="ot">&lt;-</span> <span class="fu">sapply</span>(check_names, <span class="cf">function</span>(names) <span class="sc">!</span>names <span class="sc">%in%</span> correct_names)</span>
+<span id="cb24-39"><a href="3.14-Miscellaneous-Check.html#cb24-39" tabindex="-1"></a>    </span>
+<span id="cb24-40"><a href="3.14-Miscellaneous-Check.html#cb24-40" tabindex="-1"></a>  correct_check_names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(correct_names[correct_check], <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb24-41"><a href="3.14-Miscellaneous-Check.html#cb24-41" tabindex="-1"></a>    </span>
+<span id="cb24-42"><a href="3.14-Miscellaneous-Check.html#cb24-42" tabindex="-1"></a>  test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;The following values are missing in `column_name`: &quot;</span>, correct_check_names, <span class="st">&quot;. Hint: (a) Look at the function `case_when()`. (b) Make sure you converted the values correctly according to the prompt.&quot;</span>)</span>
+<span id="cb24-43"><a href="3.14-Miscellaneous-Check.html#cb24-43" tabindex="-1"></a>}</span>
+<span id="cb24-44"><a href="3.14-Miscellaneous-Check.html#cb24-44" tabindex="-1"></a>    </span>
+<span id="cb24-45"><a href="3.14-Miscellaneous-Check.html#cb24-45" tabindex="-1"></a><span class="co">#Example 3 (From Final, P1 Q1b): Dynamically checking if the columns of a tibble were correctly cleaned by removing the punctuation symbols `‡`, `–`, `†`. </span></span>
+<span id="cb24-46"><a href="3.14-Miscellaneous-Check.html#cb24-46" tabindex="-1"></a><span class="cf">else</span> <span class="cf">if</span>(<span class="fu">any</span>(<span class="fu">sapply</span>(<span class="fu">c</span>(<span class="st">&#39;‡&#39;</span>, <span class="st">&#39;–&#39;</span>, <span class="st">&#39;†&#39;</span>), <span class="cf">function</span>(value) {<span class="fu">any</span>(variable_name <span class="sc">|&gt;</span> <span class="fu">summarise_all</span>(<span class="sc">~</span> value <span class="sc">%in%</span> .))}))){</span>
+<span id="cb24-47"><a href="3.14-Miscellaneous-Check.html#cb24-47" tabindex="-1"></a>  </span>
+<span id="cb24-48"><a href="3.14-Miscellaneous-Check.html#cb24-48" tabindex="-1"></a>  value_check <span class="ot">&lt;-</span> <span class="fu">sapply</span>(<span class="fu">c</span>(<span class="st">&#39;‡&#39;</span>, <span class="st">&#39;–&#39;</span>, <span class="st">&#39;†&#39;</span>), <span class="cf">function</span>(value) {<span class="fu">any</span>(variable_name <span class="sc">|&gt;</span> <span class="fu">summarise_all</span>(<span class="sc">~</span> value <span class="sc">%in%</span> .))})</span>
+<span id="cb24-49"><a href="3.14-Miscellaneous-Check.html#cb24-49" tabindex="-1"></a>    </span>
+<span id="cb24-50"><a href="3.14-Miscellaneous-Check.html#cb24-50" tabindex="-1"></a>  value_names <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">c</span>(<span class="st">&#39;‡&#39;</span>, <span class="st">&#39;–&#39;</span>, <span class="st">&#39;†&#39;</span>)[value_check], <span class="at">collapse =</span> <span class="st">&quot; &quot;</span>)</span>
+<span id="cb24-51"><a href="3.14-Miscellaneous-Check.html#cb24-51" tabindex="-1"></a>    </span>
+<span id="cb24-52"><a href="3.14-Miscellaneous-Check.html#cb24-52" tabindex="-1"></a>  test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">&quot;The following special characters were found in `variable_name`: &quot;</span>, value_names, <span class="st">&quot;. Please clean the data before proceeding.&quot;</span>, <span class="at">collapse =</span> <span class="st">&quot;  &quot;</span>)</span>
+<span id="cb24-53"><a href="3.14-Miscellaneous-Check.html#cb24-53" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<p style="text-align: center;">
+<a href="3.13-Expression-Check.html"><button class="btn btn-default">Previous</button></a>
+<a href="3.15-dynamic-checks.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>

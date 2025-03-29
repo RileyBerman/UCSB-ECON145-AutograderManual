@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="6.2 ggplot_grader() | UCSB ECON 145 Autograder Manual" />
+<meta property="og:type" content="book" />
+
+<meta property="og:description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
+
+
+<meta name="author" content="Riley Berman, Alex Zhao, &amp; 2024 ECON 145 Summer Team" />
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  TeX: { equationNumbers: { autoNumber: "AMS" } }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<meta name="description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder.">
+
+<title>6.2 ggplot_grader() | UCSB ECON 145 Autograder Manual</title>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="libs/navigation-1.1/tabsets.js"></script>
+<script src="libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="libs/viz-1.8.2/viz.js"></script>
+<link href="libs/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="libs/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+/* Used with Pandoc 2.11+ new --citeproc when CSL is used */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="css/toc.css" type="text/css" />
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+/* show arrow before summary tag as in bootstrap
+TODO: remove if bootstrap in updated in html_document (rmarkdown#1485) */
+details > summary {
+  display: list-item;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container-fluid main-container">
+
+
+<div class="row">
+<div class="col-sm-12">
+<div id="TOC">
+<ul>
+<li class="has-sub"><a href="index.html#preface" id="toc-preface">Preface</a>
+<ul>
+<li><a href="Acknowledgements.html#Acknowledgements" id="toc-Acknowledgements">Acknowledgements</a></li>
+</ul></li>
+<li><a href="1-Introduction.html#Introduction" id="toc-Introduction"><span class="toc-section-number">1</span> Introduction</a></li>
+<li class="has-sub"><a href="2-Autograder-Conventions.html#Autograder-Conventions" id="toc-Autograder-Conventions"><span class="toc-section-number">2</span> Autograder Conventions</a>
+<ul>
+<li><a href="2.1-general-structure.html#general-structure" id="toc-general-structure"><span class="toc-section-number">2.1</span> General Structure</a></li>
+<li><a href="2.2-test.html#test.results" id="toc-test.results"><span class="toc-section-number">2.2</span> What is test.results?</a></li>
+</ul></li>
+<li class="has-sub"><a href="3-Public-Questions.html#Public-Questions" id="toc-Public-Questions"><span class="toc-section-number">3</span> Public Questions</a>
+<ul>
+<li><a href="3.1-general-form.html#general-form" id="toc-general-form"><span class="toc-section-number">3.1</span> General Form</a></li>
+<li><a href="3.2-Name-Check.html#Name-Check" id="toc-Name-Check"><span class="toc-section-number">3.2</span> Name Check (G)</a></li>
+<li><a href="3.3-Prerequisite-Check.html#Prerequisite-Check" id="toc-Prerequisite-Check"><span class="toc-section-number">3.3</span> Prerequisite Check (G)</a></li>
+<li><a href="3.4-Structure-Check.html#Structure-Check" id="toc-Structure-Check"><span class="toc-section-number">3.4</span> Structure Check (G)</a></li>
+<li><a href="3.5-Column-Name-Check.html#Column-Name-Check" id="toc-Column-Name-Check"><span class="toc-section-number">3.5</span> Column Name Check (G)</a></li>
+<li><a href="3.6-Row-Column-Check.html#Row-Column-Check" id="toc-Row-Column-Check"><span class="toc-section-number">3.6</span> Row &amp; Column Check (G)</a></li>
+<li><a href="3.7-Correct-Check.html#Correct-Check" id="toc-Correct-Check"><span class="toc-section-number">3.7</span> Correct Check (G)</a></li>
+<li><a href="3.8-PERMID-Check.html#PERMID-Check" id="toc-PERMID-Check"><span class="toc-section-number">3.8</span> PERMID Check (G)</a></li>
+<li><a href="3.9-Type-Check.html#Type-Check" id="toc-Type-Check"><span class="toc-section-number">3.9</span> Type Check (S)</a></li>
+<li><a href="3.10-Value-Check.html#Value-Check" id="toc-Value-Check"><span class="toc-section-number">3.10</span> Value Check (S)</a></li>
+<li><a href="3.11-Calculation-Check.html#Calculation-Check" id="toc-Calculation-Check"><span class="toc-section-number">3.11</span> Calculation Check (S)</a></li>
+<li><a href="3.12-NA-Check.html#NA-Check" id="toc-NA-Check"><span class="toc-section-number">3.12</span> NA Check (S)</a></li>
+<li><a href="3.13-Expression-Check.html#Expression-Check" id="toc-Expression-Check"><span class="toc-section-number">3.13</span> Expression Check (S)</a></li>
+<li><a href="3.14-Miscellaneous-Check.html#Miscellaneous-Check" id="toc-Miscellaneous-Check"><span class="toc-section-number">3.14</span> Miscellaneous Checks (S)</a></li>
+<li><a href="3.15-dynamic-checks.html#dynamic-checks" id="toc-dynamic-checks"><span class="toc-section-number">3.15</span> Dynamic Checks</a></li>
+</ul></li>
+<li><a href="4-Check-Flowchart.html#Check-Flowchart" id="toc-Check-Flowchart"><span class="toc-section-number">4</span> Check Flowchart</a></li>
+<li class="has-sub"><a href="5-Putting-It-All-Together.html#Putting-It-All-Together" id="toc-Putting-It-All-Together"><span class="toc-section-number">5</span> Putting It All Together</a>
+<ul>
+<li><a href="5.1-example-tibble.html#example-tibble" id="toc-example-tibble"><span class="toc-section-number">5.1</span> Example: Tibble</a></li>
+<li><a href="5.2-example-vector.html#example-vector" id="toc-example-vector"><span class="toc-section-number">5.2</span> Example: Vector</a></li>
+<li><a href="5.3-example-list.html#example-list" id="toc-example-list"><span class="toc-section-number">5.3</span> Example: List</a></li>
+</ul></li>
+<li class="has-sub"><a href="6-Private-Questions.html#Private-Questions" id="toc-Private-Questions"><span class="toc-section-number">6</span> Private Questions</a>
+<ul>
+<li class="has-sub"><a href="6.1-private_grader.html#private_grader" id="toc-private_grader"><span class="toc-section-number">6.1</span> private_grader()</a>
+<ul>
+<li><a href="6.1-private_grader.html#description" id="toc-description">Description</a></li>
+<li><a href="6.1-private_grader.html#usage" id="toc-usage">Usage</a></li>
+<li><a href="6.1-private_grader.html#arguments" id="toc-arguments">Arguments</a></li>
+<li><a href="6.1-private_grader.html#value" id="toc-value">Value</a></li>
+<li><a href="6.1-private_grader.html#details" id="toc-details">Details</a></li>
+<li><a href="6.1-private_grader.html#example-1-tibble" id="toc-example-1-tibble">Example 1: Tibble</a></li>
+<li><a href="6.1-private_grader.html#example-2-vectors" id="toc-example-2-vectors">Example 2: Vectors</a></li>
+<li><a href="6.1-private_grader.html#example-3-lists" id="toc-example-3-lists">Example 3: Lists</a></li>
+<li><a href="6.1-private_grader.html#private_grader-plots" id="toc-private_grader-plots">Example 4: Plots</a></li>
+<li><a href="6.1-private_grader.html#acknowledgements" id="toc-acknowledgements">Acknowledgements</a></li>
+</ul></li>
+<li class="has-sub"><a href="6.2-ggplot_grader.html#ggplot_grader" id="toc-ggplot_grader"><span class="toc-section-number">6.2</span> ggplot_grader()</a>
+<ul>
+<li><a href="6.2-ggplot_grader.html#description-1" id="toc-description-1">Description</a></li>
+<li><a href="6.2-ggplot_grader.html#usage-1" id="toc-usage-1">Usage</a></li>
+<li><a href="6.2-ggplot_grader.html#arguments-1" id="toc-arguments-1">Arguments</a></li>
+<li><a href="6.2-ggplot_grader.html#value-1" id="toc-value-1">Value</a></li>
+<li><a href="6.2-ggplot_grader.html#details-1" id="toc-details-1">Details</a></li>
+<li><a href="6.2-ggplot_grader.html#example-1" id="toc-example-1">Example 1</a></li>
+<li><a href="6.2-ggplot_grader.html#example-2" id="toc-example-2">Example 2</a></li>
+<li><a href="6.2-ggplot_grader.html#example-3" id="toc-example-3">Example 3</a></li>
+<li><a href="6.2-ggplot_grader.html#example-4" id="toc-example-4">Example 4</a></li>
+<li><a href="6.2-ggplot_grader.html#acknowledgements-1" id="toc-acknowledgements-1">Acknowledgements</a></li>
+</ul></li>
+<li class="has-sub"><a href="6.3-private_tabyl_grader.html#private_tabyl_grader" id="toc-private_tabyl_grader"><span class="toc-section-number">6.3</span> private_tabyl_grader()</a>
+<ul>
+<li><a href="6.3-private_tabyl_grader.html#description-2" id="toc-description-2">Description</a></li>
+<li><a href="6.3-private_tabyl_grader.html#usage-2" id="toc-usage-2">Usage</a></li>
+<li><a href="6.3-private_tabyl_grader.html#arguments-2" id="toc-arguments-2">Arguments</a></li>
+<li><a href="6.3-private_tabyl_grader.html#value-2" id="toc-value-2">Value</a></li>
+<li><a href="6.3-private_tabyl_grader.html#details-2" id="toc-details-2">Details</a></li>
+<li><a href="6.3-private_tabyl_grader.html#example" id="toc-example">Example</a></li>
+<li><a href="6.3-private_tabyl_grader.html#acknowledgements-2" id="toc-acknowledgements-2">Acknowledgements</a></li>
+</ul></li>
+</ul></li>
+<li class="has-sub"><a href="7-DGP.html#DGP.R" id="toc-DGP.R"><span class="toc-section-number">7</span> DGP.R</a>
+<ul>
+<li class="has-sub"><a href="7.1-examples.html#examples" id="toc-examples"><span class="toc-section-number">7.1</span> Examples</a>
+<ul>
+<li><a href="7.1-examples.html#example-1-1" id="toc-example-1-1">Example 1</a></li>
+<li><a href="7.1-examples.html#example-2-1" id="toc-example-2-1">Example 2</a></li>
+<li><a href="7.1-examples.html#example-3-1" id="toc-example-3-1">Example 3</a></li>
+<li><a href="7.1-examples.html#example-4-1" id="toc-example-4-1">Example 4</a></li>
+<li><a href="7.1-examples.html#example-5" id="toc-example-5">Example 5</a></li>
+</ul></li>
+</ul></li>
+<li><a href="references.html#references" id="toc-references">References</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="row">
+<div class="col-sm-12">
+<div id="ggplot_grader" class="section level2" number="6.2">
+<h2><span class="header-section-number">6.2</span> ggplot_grader()</h2>
+<div id="description-1" class="section level3 unnumbered">
+<h3>Description</h3>
+<p>Grades Private (or Public) Questions involving <code>ggplot</code> objects from the <code>ggplot2</code> package <span class="citation">(<a href="#ref-R-ggplot2">Wickham et al. 2024</a>)</span>.</p>
+<p>This function provides more detailed feedback than traditionally given by the autograder. Rather than evaluating for full plot correctness, <code>ggplot_grader()</code> checks for key plot attributes, like a proper title or x-y aesthetics, and returns targeted feedback. Accordingly, some flexibility is maintained between the student’s plot and the solution.</p>
+<p>See <a href="6.1-private_grader.html#private_grader-plots">Plots</a> for more information.</p>
+</div>
+<div id="usage-1" class="section level3 unnumbered">
+<h3>Usage</h3>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="6.2-ggplot_grader.html#cb37-1" tabindex="-1"></a><span class="fu">ggplot_grader</span>(var_name, </span>
+<span id="cb37-2"><a href="6.2-ggplot_grader.html#cb37-2" tabindex="-1"></a>              var, </span>
+<span id="cb37-3"><a href="6.2-ggplot_grader.html#cb37-3" tabindex="-1"></a>              var_test, </span>
+<span id="cb37-4"><a href="6.2-ggplot_grader.html#cb37-4" tabindex="-1"></a>              <span class="at">status =</span> <span class="fu">paste0</span>(<span class="st">&quot;Question &quot;</span>, quest_num, <span class="st">&quot; (Private)&quot;</span>),</span>
+<span id="cb37-5"><a href="6.2-ggplot_grader.html#cb37-5" tabindex="-1"></a>              <span class="at">prev_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-6"><a href="6.2-ggplot_grader.html#cb37-6" tabindex="-1"></a>              <span class="at">title_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-7"><a href="6.2-ggplot_grader.html#cb37-7" tabindex="-1"></a>              <span class="at">axis_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-8"><a href="6.2-ggplot_grader.html#cb37-8" tabindex="-1"></a>              <span class="at">aesthetic_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-9"><a href="6.2-ggplot_grader.html#cb37-9" tabindex="-1"></a>              <span class="at">aesthetic_flexible_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-10"><a href="6.2-ggplot_grader.html#cb37-10" tabindex="-1"></a>              <span class="at">axis_name_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-11"><a href="6.2-ggplot_grader.html#cb37-11" tabindex="-1"></a>              <span class="at">data_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-12"><a href="6.2-ggplot_grader.html#cb37-12" tabindex="-1"></a>              <span class="at">facet_wrap_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-13"><a href="6.2-ggplot_grader.html#cb37-13" tabindex="-1"></a>              <span class="at">geom_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-14"><a href="6.2-ggplot_grader.html#cb37-14" tabindex="-1"></a>              <span class="at">geom_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;GeomPoint&quot;</span>), </span>
+<span id="cb37-15"><a href="6.2-ggplot_grader.html#cb37-15" tabindex="-1"></a>              <span class="at">color_fill_check =</span> <span class="cn">FALSE</span>, </span>
+<span id="cb37-16"><a href="6.2-ggplot_grader.html#cb37-16" tabindex="-1"></a>              <span class="at">color_fill_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;colour&quot;</span>), </span>
+<span id="cb37-17"><a href="6.2-ggplot_grader.html#cb37-17" tabindex="-1"></a>              <span class="at">quest_num =</span> <span class="dv">0</span>, </span>
+<span id="cb37-18"><a href="6.2-ggplot_grader.html#cb37-18" tabindex="-1"></a>              <span class="at">quest_pt =</span> <span class="dv">0</span>, </span>
+<span id="cb37-19"><a href="6.2-ggplot_grader.html#cb37-19" tabindex="-1"></a>              <span class="at">quest_prev =</span> <span class="dv">1</span>, </span>
+<span id="cb37-20"><a href="6.2-ggplot_grader.html#cb37-20" tabindex="-1"></a>              <span class="at">quest_prev_status =</span> <span class="cn">NULL</span>)</span></code></pre></div>
+</div>
+<div id="arguments-1" class="section level3 unnumbered">
+<h3>Arguments</h3>
+<table>
+<colgroup>
+<col width="9%" />
+<col width="72%" />
+<col width="17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Element</th>
+<th align="left">Description</th>
+<th align="left">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">var_name</td>
+<td align="left">character, the expected name of var</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">var</td>
+<td align="left">expected ggplot object, the student’s ggplot</td>
+<td align="left">-</td>
+</tr>
+<tr class="odd">
+<td align="left">var_test</td>
+<td align="left">other ggplot object, the answer key’s ggplot to be compared with var</td>
+<td align="left">-</td>
+</tr>
+<tr class="even">
+<td align="left">status</td>
+<td align="left">character, the question’s displayed part, number, and type (Private/Public)</td>
+<td align="left">paste0(“Question”, quest_num, ” (Private)“)</td>
+</tr>
+<tr class="odd">
+<td align="left">prev_check</td>
+<td align="left">logical indicating if the Prerequisite Check should be triggered; requires quest_prev value and can optionally be combined with quest_prev_status</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">title_check</td>
+<td align="left">logical indicating if an existence check for a graph title should be triggered</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">axis_check</td>
+<td align="left">logical indicating if an existence check for the x-y axis labels should be triggered</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">aesthetic_check</td>
+<td align="left">logical indicating if a strict check for the correct x-y aesthetic mappings should be triggered; alternative to aesthetic_flexible_check; see aesthetic_check or aesthetic_flexible_check?</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">aesthetic_flexible_check</td>
+<td align="left">logical indicating if a flexible check for the correct x-y aesthetic mappings should be triggered; alternative to aesthetic_check; see aesthetic_check or aesthetic_flexible_check?</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">axis_name_check</td>
+<td align="left">logical indicating if a check for the correct x-y axis labels should be triggered</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">data_check</td>
+<td align="left">logical indicating if a check for the correct data associated with the x-y aesthetics should be triggered; requires aesthetic_check</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">facet_wrap_check</td>
+<td align="left">logical indicating if a check for the existence of ggplot2::facet_wrap() should be triggered</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="odd">
+<td align="left">geom_check</td>
+<td align="left">logical indicating if an existence check for ggplot layer types (e.g., ggplot2::geom_point()) should be triggered; requires geom_check_name</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">geom_check_name</td>
+<td align="left">character vector of the various ggplot layer types to check for in geom_check; Example: c(“GeomPoint”, “GeomSmooth”)</td>
+<td align="left">c(“GeomPoint”)</td>
+</tr>
+<tr class="odd">
+<td align="left">color_fill_check</td>
+<td align="left">logical indicating if an existence check for the “color” and/or “fill” arguments should be triggered; requires color_fill_check_name</td>
+<td align="left">FALSE</td>
+</tr>
+<tr class="even">
+<td align="left">color_fill_check_name</td>
+<td align="left">character vector of the “color” and/or “fill” arguments to check for in color_fill_check; Example: c(“colour”, “fill”)</td>
+<td align="left">c(“colour”)</td>
+</tr>
+<tr class="odd">
+<td align="left">quest_num</td>
+<td align="left">numeric, the question’s number</td>
+<td align="left">0</td>
+</tr>
+<tr class="even">
+<td align="left">quest_pt</td>
+<td align="left">numeric, the question’s maximum score</td>
+<td align="left">0</td>
+</tr>
+<tr class="odd">
+<td align="left">quest_prev</td>
+<td align="left">numeric, the prerequisite question’s number</td>
+<td align="left">1</td>
+</tr>
+<tr class="even">
+<td align="left">quest_prev_status</td>
+<td align="left">character, the prerequisite question’s part and number</td>
+<td align="left">NULL</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="value-1" class="section level3 unnumbered">
+<h3>Value</h3>
+<p>The <code>test.results[#, ]</code> vector, containing the question’s <code>status</code>, amount of points awarded, total point value, and feedback message.</p>
+<p>See <a href="2.2-test.html#test.results">What is test.results?</a> for more details.</p>
+</div>
+<div id="details-1" class="section level3 unnumbered">
+<h3>Details</h3>
+<div class="infobox imp">
+<p>Designed for grading Private (or Public) Questions involving <strong>ggplot objects only</strong> (i.e., objects with a <code>ggplot</code> class attribute).</p>
+<p>The function flexibly grades ggplot objects by allowing the user to specify which ggplot attributes to check for.</p>
+</div>
+<p>Note that <code>var</code> is the <em>expected</em> student’s ggplot object and may not necessarily exist or be a ggplot object (e.g., the student decided to use R’s base <code>plot()</code> instead).</p>
+<ul>
+<li>This is not a problem because <code>ggplot_grader()</code> first tests for a <code>ggplot</code> class attribute and then performs the <a href="3.2-Name-Check.html#Name-Check">Name Check</a>. If <code>var</code> does not exist or is not a ggplot object, the subsequent Checks will not be triggered.</li>
+</ul>
+<p>Like in <a href="6.1-private_grader.html#private_grader"><code>private_grader()</code></a>, <code>quest_prev_status</code> is an <em>optional</em> argument when using <code>prev_check</code> and <code>quest_prev</code> but helps <em>clarify</em> an unclear prerequisite question’s location in the feedback message.</p>
+<div id="aesthetic_check_difference" class="section level4 unnumbered">
+<h4>When to use aesthetic_check or aesthetic_flexible_check?</h4>
+<p><code>aesthetic_check</code> tests if the x-y aesthetic mappings of <code>var</code> are <em>exactly the same</em> as in <code>var_test</code>, while <code>aesthetic_flexible_check</code> tests if the x-y aesthetic mappings of <code>var_test</code> are <em>contained</em> in <code>var</code>.</p>
+<p>Consider the following motivating example:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="6.2-ggplot_grader.html#cb38-1" tabindex="-1"></a><span class="co">#student&#39;s ggplot object</span></span>
+<span id="cb38-2"><a href="6.2-ggplot_grader.html#cb38-2" tabindex="-1"></a>var <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, death <span class="sc">*</span> <span class="dv">100</span>)) </span>
+<span id="cb38-3"><a href="6.2-ggplot_grader.html#cb38-3" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="6.2-ggplot_grader.html#cb38-4" tabindex="-1"></a><span class="co">#answer key&#39;s ggplot object</span></span>
+<span id="cb38-5"><a href="6.2-ggplot_grader.html#cb38-5" tabindex="-1"></a>var_test <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">death =</span> death <span class="sc">*</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb38-6"><a href="6.2-ggplot_grader.html#cb38-6" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, death)) </span></code></pre></div>
+<p>Under <code>aesthetic_check</code>, the student’s <code>var</code> would <em>not be considered correct</em>, because its x-y aesthetic mappings (<code>x = date</code>, <code>y = death * 100</code>) are not the same as in <code>var_test</code> (<code>x = date</code>, <code>y = death</code>), despite the ggplots being <em>virtually identical.</em></p>
+<p>However, under <code>aesthetic_flexible_check</code>, <code>var</code> is now <em>considered correct</em>, since it contains <code>var_test</code>’s aesthetics.</p>
+<div class="infobox imp">
+<p><code>aesthetic_flexible_check</code> is more flexible than <code>aesthetic_check</code>, since it allows for a wider range of acceptable x-y aesthetics. However, because the student’s aesthetics can then vary <em>slightly</em> from the answer key, the <code>data_check</code> <strong>can’t be performed without an error occurring.</strong><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a></p>
+<p>Consequently, <code>data_check</code> is <em>automatically</em> turned off when <code>aesthetic_flexible_check</code> is set to <code>TRUE</code>.</p>
+</div>
+<p><strong>Recommendation</strong>: If it is reasonable that a student could use <em>similar</em>, but <em>not identical</em>, x-y aesthetics to the solution (like above), use <code>aesthetic_flexible_check</code>, keeping in mind that <code>data_check</code> will be turned off. Otherwise, if the aesthetics can reasonably be expected to be the same as the solution and/or the prompt is explicit about which aesthetics to chose, use <code>aesthetic_check</code>. Implementing a <code>data_check</code> is available here.</p>
+<ul>
+<li>Generally, opting for <code>aesthetic_flexible_check</code> is the <em>safer and better choice</em> (at least until this issue is resolved).</li>
+</ul>
+<div class="infobox warning">
+<p><strong>Warning</strong>:</p>
+<p><code>aesthetic_flexible_check</code> and <code>aesthetic_check</code> are <em>mutually exclusive checks.</em></p>
+<p><strong>Do not use both arguments together – that is, don’t set both to <code>TRUE</code></strong>.</p>
+</div>
+</div>
+</div>
+<div id="example-1" class="section level3 unnumbered">
+<h3>Example 1</h3>
+<p>Consider the following question from Homework 10.</p>
+<p><strong>Part 1: COVID-19 Data</strong></p>
+<ol start="4" style="list-style-type: decimal">
+<li>(<em>Public Question</em>) Next, create a bar plot, using <code>ggplot2</code>, that plots the percentage of people who died from COVID-19 based on their vaccination status and age group. The plot should have four bars in two groups. One group of bars should be for those unvaccinated and the second group of bars should be for those vaccinated. In each group, you should have two bars representing the percentage who died of COVID-19, one for those 50 years or older and one for those younger than 50. Save your bar plot as <strong><code>covid_plot2</code></strong>.</li>
+</ol>
+<p>The answer should look something like:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb39-1"><a href="6.2-ggplot_grader.html#cb39-1" tabindex="-1"></a>covid_plot2 <span class="ot">&lt;-</span> covid_data <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="6.2-ggplot_grader.html#cb39-2" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">death =</span> <span class="fu">sum</span>(outcome <span class="sc">==</span> <span class="st">&quot;death&quot;</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb39-3"><a href="6.2-ggplot_grader.html#cb39-3" tabindex="-1"></a>            <span class="at">survived =</span> <span class="fu">sum</span>(outcome <span class="sc">==</span> <span class="st">&quot;survived&quot;</span>)<span class="sc">/</span><span class="fu">n</span>(),</span>
+<span id="cb39-4"><a href="6.2-ggplot_grader.html#cb39-4" tabindex="-1"></a>            <span class="at">.by =</span> <span class="fu">c</span>(vaccine_status, age_group)) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="6.2-ggplot_grader.html#cb39-5" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> vaccine_status, <span class="at">y =</span> death, <span class="at">fill =</span> age_group)) <span class="sc">+</span></span>
+<span id="cb39-6"><a href="6.2-ggplot_grader.html#cb39-6" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="at">position =</span> <span class="st">&quot;dodge&quot;</span>) <span class="sc">+</span></span>
+<span id="cb39-7"><a href="6.2-ggplot_grader.html#cb39-7" tabindex="-1"></a>    <span class="fu">ylab</span>(<span class="st">&quot;percentage&quot;</span>) </span></code></pre></div>
+<p>Assume this question is worth 20 points and that we want to check if the ggplot has:</p>
+<ul>
+<li>a <code>geom_bar</code> layer,</li>
+<li>a <code>fill</code> argument,</li>
+<li>and x-y axis labels.</li>
+</ul>
+<p>Then, the autograder code for this question should look like:</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="6.2-ggplot_grader.html#cb40-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s ggplot `covid_plot2` with the answer key&#39;s `covid_plot2_test` </span></span>
+<span id="cb40-2"><a href="6.2-ggplot_grader.html#cb40-2" tabindex="-1"></a><span class="co">#Note: the student can use `geom_col()` instead of `geom_bar()`, since it has the same ggplot attribute `GeomBar`</span></span>
+<span id="cb40-3"><a href="6.2-ggplot_grader.html#cb40-3" tabindex="-1"></a>test.results[<span class="dv">4</span>, ] <span class="ot">&lt;-</span> <span class="fu">ggplot_grader</span>(<span class="st">&quot;covid_plot2&quot;</span>, covid_plot2, covid_plot2_test, </span>
+<span id="cb40-4"><a href="6.2-ggplot_grader.html#cb40-4" tabindex="-1"></a>                                   <span class="at">status =</span> <span class="st">&quot;Part 1 Question 4 (Public)&quot;</span>, <span class="at">axis_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb40-5"><a href="6.2-ggplot_grader.html#cb40-5" tabindex="-1"></a>                                   <span class="at">geom_check =</span> <span class="cn">TRUE</span>, <span class="at">geom_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;GeomBar&quot;</span>), </span>
+<span id="cb40-6"><a href="6.2-ggplot_grader.html#cb40-6" tabindex="-1"></a>                                   <span class="at">color_fill_check =</span> <span class="cn">TRUE</span>, <span class="at">color_fill_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;fill&quot;</span>),</span>
+<span id="cb40-7"><a href="6.2-ggplot_grader.html#cb40-7" tabindex="-1"></a>                                   <span class="at">quest_num =</span> <span class="dv">4</span>, <span class="at">quest_pt =</span> <span class="dv">20</span>)</span></code></pre></div>
+</div>
+<div id="example-2" class="section level3 unnumbered">
+<h3>Example 2</h3>
+<p>Consider the following question from Homework 12.</p>
+<p><strong>Part 1: Coding Assignment</strong></p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>In the final coding question, you will recreate Figures 1 and 2, which represent the median home price in the data for each state and the median home price to county per capita income ratio for each state.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>(<em>Private Question</em>) Using <code>priceIncomeData</code>, create a bar plot called <strong><code>priceByIncomePlot</code></strong> that shows the median home price to county per capita income ratio for each state and the US as a whole. The x-axis should be the state, and the y-axis should be the median home price to county per capita income ratio. The bars should be colored based on if the state median home price to county per capita income ratio is above or below the US as a whole.</li>
+</ol></li>
+</ol>
+<p>The answer should look something like:</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="6.2-ggplot_grader.html#cb41-1" tabindex="-1"></a>priceByIncomePlot <span class="ot">&lt;-</span> priceIncomeData <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="6.2-ggplot_grader.html#cb41-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(state, price_by_income), <span class="at">y =</span> price_by_income)) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="6.2-ggplot_grader.html#cb41-3" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="fu">aes</span>(<span class="at">fill =</span> above_below_us_price_by_income)) <span class="sc">+</span></span>
+<span id="cb41-4"><a href="6.2-ggplot_grader.html#cb41-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span> <span class="co">#rotate x-axis values for visibility </span></span>
+<span id="cb41-5"><a href="6.2-ggplot_grader.html#cb41-5" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&#39;Median Home Price to Average Income Ratio&#39;</span>, <span class="at">x =</span> <span class="st">&#39;State&#39;</span>, <span class="at">y =</span> <span class="st">&#39;Median Price to Average Income Ratio&#39;</span>)</span></code></pre></div>
+<p>Assume this question is worth 15 points and is the eighth question of the assignment.</p>
+<p>We want to check if the ggplot has:</p>
+<ul>
+<li>a title,</li>
+<li>the correct x-y axis labels,</li>
+<li>a <code>geom_bar</code> layer,</li>
+<li>a <code>fill</code> argument,</li>
+<li>and a correctly created <code>priceIncomeData</code> from a previous question (the sixth question).</li>
+</ul>
+<p>Then, the autograder code for this question should look like:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="6.2-ggplot_grader.html#cb42-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s ggplot `priceByIncomePlot` with the answer key&#39;s `priceByIncomePlot_test` </span></span>
+<span id="cb42-2"><a href="6.2-ggplot_grader.html#cb42-2" tabindex="-1"></a><span class="co">#Note: `axis_name_check` can be used without `axis_check` to check if the x-y axis labels are correct (and therefore exist)</span></span>
+<span id="cb42-3"><a href="6.2-ggplot_grader.html#cb42-3" tabindex="-1"></a>test.results[<span class="dv">8</span>, ] <span class="ot">&lt;-</span> <span class="fu">ggplot_grader</span>(<span class="st">&quot;priceByIncomePlot&quot;</span>, priceByIncomePlot, priceByIncomePlot_test, </span>
+<span id="cb42-4"><a href="6.2-ggplot_grader.html#cb42-4" tabindex="-1"></a>                                   <span class="at">status =</span> <span class="st">&quot;Question 4c (Private)&quot;</span>, <span class="at">title_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb42-5"><a href="6.2-ggplot_grader.html#cb42-5" tabindex="-1"></a>                                   <span class="at">axis_check =</span> <span class="cn">TRUE</span>, <span class="at">axis_name_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb42-6"><a href="6.2-ggplot_grader.html#cb42-6" tabindex="-1"></a>                                   <span class="at">geom_check =</span> <span class="cn">TRUE</span>, <span class="at">geom_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;GeomBar&quot;</span>), </span>
+<span id="cb42-7"><a href="6.2-ggplot_grader.html#cb42-7" tabindex="-1"></a>                                   <span class="at">color_fill_check =</span> <span class="cn">TRUE</span>, <span class="at">color_fill_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;fill&quot;</span>), </span>
+<span id="cb42-8"><a href="6.2-ggplot_grader.html#cb42-8" tabindex="-1"></a>                                   <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_prev =</span> <span class="dv">6</span>, <span class="at">quest_prev_status =</span> <span class="st">&quot;Question 4a&quot;</span>,</span>
+<span id="cb42-9"><a href="6.2-ggplot_grader.html#cb42-9" tabindex="-1"></a>                                   <span class="at">quest_num =</span> <span class="dv">8</span>, <span class="at">quest_pt =</span> <span class="dv">15</span>) </span></code></pre></div>
+</div>
+<div id="example-3" class="section level3 unnumbered">
+<h3>Example 3</h3>
+<p>Consider the following question from Homework 13.</p>
+<p><strong>Part 1: Coding Assignment</strong></p>
+<ol start="2" style="list-style-type: decimal">
+<li><p>In this question, you will work with the <code>gdpData.csv</code> file to analyze national Olympic performance and GDP.</p>
+<ol start="4" style="list-style-type: lower-alpha">
+<li>(<em>Public Question</em>) Next, using <code>olympic_gdp_data</code> and <code>ggplot</code>, create a group of scatter plots that plot the percentage of the GDP and percentage of the medals won by each country in the 2010 through 2016 Olympic games. The x-axis should contain the percentage of the GDP and the y-axis should contain the percentage of the medals won. The plots should be faceted by the year and season of the Olympic games, such that one plot is for the 2010 winter Olympics, another is for the 2012 summer Olympics, etc. Include a line with slope equal to 1 to denote the values for which the percent of GDP and percent of medals won is equal. You should also label the points on your graph with the NOC codes for the countries that have at least 5% of the GDP or medals won during each Olympic games. Save your plot as <strong><code>olympic_gdp_perc_plot</code></strong>.</li>
+</ol></li>
+</ol>
+<p>The answer should look something like:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="6.2-ggplot_grader.html#cb43-1" tabindex="-1"></a>olympic_gdp_perc_plot <span class="ot">&lt;-</span> olympic_gdp_data <span class="sc">|&gt;</span> </span>
+<span id="cb43-2"><a href="6.2-ggplot_grader.html#cb43-2" tabindex="-1"></a>    <span class="fu">filter</span>(year <span class="sc">&gt;=</span> <span class="dv">2010</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb43-3"><a href="6.2-ggplot_grader.html#cb43-3" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(gdp_per_capita), medalsPerc <span class="sc">&gt;</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb43-4"><a href="6.2-ggplot_grader.html#cb43-4" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> gdpPerc, <span class="at">y =</span> medalsPerc)) <span class="sc">+</span> </span>
+<span id="cb43-5"><a href="6.2-ggplot_grader.html#cb43-5" tabindex="-1"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb43-6"><a href="6.2-ggplot_grader.html#cb43-6" tabindex="-1"></a>    <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">if_else</span>(medalsPerc <span class="sc">&gt;</span> <span class="fl">0.05</span> <span class="sc">|</span> gdpPerc <span class="sc">&gt;</span> <span class="fl">0.05</span>, noc, <span class="st">&#39;&#39;</span>), </span>
+<span id="cb43-7"><a href="6.2-ggplot_grader.html#cb43-7" tabindex="-1"></a>                  <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">vjust =</span> <span class="dv">0</span>)) <span class="sc">+</span></span>
+<span id="cb43-8"><a href="6.2-ggplot_grader.html#cb43-8" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">col =</span> <span class="st">&#39;red&#39;</span>) <span class="sc">+</span></span>
+<span id="cb43-9"><a href="6.2-ggplot_grader.html#cb43-9" tabindex="-1"></a>    <span class="fu">facet_wrap</span>(year<span class="sc">~</span>season)</span></code></pre></div>
+<p>Assume that this question is worth 5 points and is the ninth question of the assignment.</p>
+<p>We want to check if the ggplot has:</p>
+<ul>
+<li>x-y axis labels,</li>
+<li>the flexibly correct x-y aesthetics,</li>
+<li><code>geom_point</code>, <code>geom_abline</code>, and <code>geom_text</code> layers,</li>
+<li>a <code>facet_wrap()</code> function,</li>
+<li>and a correctly created <code>olympic_gdp_data</code> from a previous question (the eighth question).</li>
+</ul>
+<p>Then, the autograder code for this question should look like:</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="6.2-ggplot_grader.html#cb44-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s ggplot `olympic_gdp_perc_plot` with the answer key&#39;s `olympic_gdp_perc_plot_test` </span></span>
+<span id="cb44-2"><a href="6.2-ggplot_grader.html#cb44-2" tabindex="-1"></a><span class="co">#Note: `geom_abline()` can be checked through the `GeomAbline` attribute and `geom_text` through the `GeomText` attribute</span></span>
+<span id="cb44-3"><a href="6.2-ggplot_grader.html#cb44-3" tabindex="-1"></a>test.results[<span class="dv">9</span>, ] <span class="ot">&lt;-</span> <span class="fu">ggplot_grader</span>(<span class="st">&quot;olympic_gdp_perc_plot&quot;</span>, olympic_gdp_perc_plot , </span>
+<span id="cb44-4"><a href="6.2-ggplot_grader.html#cb44-4" tabindex="-1"></a>                                   olympic_gdp_perc_plot_test, <span class="at">status =</span> <span class="st">&quot;Question 2d (Public)&quot;</span>,</span>
+<span id="cb44-5"><a href="6.2-ggplot_grader.html#cb44-5" tabindex="-1"></a>                                   <span class="at">axis_check =</span> <span class="cn">TRUE</span>, <span class="at">aesthetic_flexible_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb44-6"><a href="6.2-ggplot_grader.html#cb44-6" tabindex="-1"></a>                                   <span class="at">geom_check =</span> <span class="cn">TRUE</span>, <span class="at">geom_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;GeomPoint&quot;</span>, <span class="st">&quot;GeomAbline&quot;</span>, <span class="st">&quot;GeomText&quot;</span>),  </span>
+<span id="cb44-7"><a href="6.2-ggplot_grader.html#cb44-7" tabindex="-1"></a>                                   <span class="at">quest_num =</span> <span class="dv">9</span>, <span class="at">quest_pt =</span> <span class="dv">5</span>, <span class="at">facet_wrap_check =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb44-8"><a href="6.2-ggplot_grader.html#cb44-8" tabindex="-1"></a>                                   <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_prev =</span> <span class="dv">8</span>, <span class="at">quest_prev_status =</span> <span class="st">&quot;Question 2c (Public)&quot;</span>)</span></code></pre></div>
+</div>
+<div id="example-4" class="section level3 unnumbered">
+<h3>Example 4</h3>
+<p>Consider the hypothetical homework question:</p>
+<p><strong>Part 1: Coding Assignment</strong></p>
+<ol start="2" style="list-style-type: decimal">
+<li>(<em>Private Question</em>) Using <code>basketball_data</code> from Question 1, create a scatter plot of points versus assists with <code>ggplot</code>. The x-axis should be <code>pt</code> and the y-axis should be <code>ast.</code> Save the ggplot as <strong><code>basketball_scatter</code></strong>.</li>
+</ol>
+<p>The answer should look something like:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="6.2-ggplot_grader.html#cb45-1" tabindex="-1"></a>basketball_scatter <span class="ot">&lt;-</span> basketball_data <span class="sc">|&gt;</span> </span>
+<span id="cb45-2"><a href="6.2-ggplot_grader.html#cb45-2" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pt, <span class="at">y =</span> ast)) <span class="sc">+</span></span>
+<span id="cb45-3"><a href="6.2-ggplot_grader.html#cb45-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div>
+<p>Assume this question is worth 5 points and that we want to check if the ggplot has:</p>
+<ul>
+<li>the correct x-y axis labels,</li>
+<li>the correct x-y aesthetics,</li>
+<li>the correct x-y data,</li>
+<li>a <code>geom_point</code> layer,</li>
+<li>and a correctly created <code>basketball_data</code> from a previous question (the first question).</li>
+</ul>
+<p>Then, the autograder code for this question should look like:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="6.2-ggplot_grader.html#cb46-1" tabindex="-1"></a><span class="co">#Comparing the student&#39;s plot `basketball_scatter` with the answer key&#39;s `basketball_scatter_test` </span></span>
+<span id="cb46-2"><a href="6.2-ggplot_grader.html#cb46-2" tabindex="-1"></a>test.results[<span class="dv">2</span>, ] <span class="ot">&lt;-</span> <span class="fu">ggplot_grader</span>(<span class="st">&quot;basketball_scatter&quot;</span>, basketball_scatter, basketball_scatter_test,</span>
+<span id="cb46-3"><a href="6.2-ggplot_grader.html#cb46-3" tabindex="-1"></a>                                    <span class="at">status =</span> <span class="st">&quot;Part 1 Question 2 (Private)&quot;</span>, <span class="at">axis_name_check =</span> <span class="cn">TRUE</span>, </span>
+<span id="cb46-4"><a href="6.2-ggplot_grader.html#cb46-4" tabindex="-1"></a>                                    <span class="at">aesthetic_check =</span> <span class="cn">TRUE</span>, <span class="at">data_check =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb46-5"><a href="6.2-ggplot_grader.html#cb46-5" tabindex="-1"></a>                                    <span class="at">geom_check =</span> <span class="cn">TRUE</span>, <span class="at">geom_check_name =</span> <span class="fu">c</span>(<span class="st">&quot;GeomPoint&quot;</span>), </span>
+<span id="cb46-6"><a href="6.2-ggplot_grader.html#cb46-6" tabindex="-1"></a>                                    <span class="at">quest_num =</span> <span class="dv">2</span>, <span class="at">quest_pt =</span> <span class="dv">5</span>, <span class="at">prev_check =</span> <span class="cn">TRUE</span>, <span class="at">quest_prev =</span> <span class="dv">1</span>)</span></code></pre></div>
+</div>
+<div id="acknowledgements-1" class="section level3 unnumbered">
+<h3>Acknowledgements</h3>
+<p><strong>Author</strong>: Riley Berman</p>
+<p><strong>Contributors</strong>: Alex Zhao, Jack Keefer, Shreya Sinha, Michal Snopek</p>
+</div>
+</div>
+<h3>References</h3>
+<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="ref-R-ggplot2" class="csl-entry">
+Wickham, Hadley, Winston Chang, Lionel Henry, Thomas Lin Pedersen, Kohske Takahashi, Claus Wilke, Kara Woo, Hiroaki Yutani, Dewey Dunnington, and Teun van den Brand. 2024. <em>Ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics</em>. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="5">
+<li id="fn5"><p>We haven’t found any smooth way to fix this, which might entail comparing only the final data used in the ggplot without reference to the x-y aesthetics. The problem we ran into is that to compare the student’s and answer key’s ggplot data, while allowing for flexible row and column ordering, we need to have <em>exactly</em> the same x-y aesthetics. Perhaps something like
+<a href="https://ggplot2.tidyverse.org/reference/ggplot_build.html"><code>ggplot_build</code></a> can resolve this.<a href="6.2-ggplot_grader.html#fnref5" class="footnote-back">↩︎</a></p></li>
+</ol>
+</div>
+<p style="text-align: center;">
+<a href="6.1-private_grader.html"><button class="btn btn-default">Previous</button></a>
+<a href="6.3-private_tabyl_grader.html"><button class="btn btn-default">Next</button></a>
+</p>
+</div>
+</div>
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+</body>
+</html>
