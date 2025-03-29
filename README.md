@@ -16,5 +16,5 @@ This manual is divided as follows:
 - **Private Questions**: Details about the various functions used to write autograder code for Private Questions. 
 - **DGP.R**: Information about the DGP.R file with examples. 
 
-Special thanks to Sean Kross's ["How to Start a Bookdown Book"](https://seankross.com/2016/11/17/How-to-Start-a-Bookdown-Book.html) for his [boilerplate code](#https://github.com/seankross/bookdown-start) 
+Special thanks to Sean Kross's ["How to Start a Bookdown Book"](https://seankross.com/2016/11/17/How-to-Start-a-Bookdown-Book.html) for his [boilerplate code](https://github.com/seankross/bookdown-start) 
 and Yihui Xie's excellent guidebook, ["bookdown: Authoring Books and Technical Documents with R Markdown"](https://bookdown.org/yihui/bookdown/), for his detailed breakdown of the bookdown package.
