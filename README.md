@@ -10,7 +10,7 @@ This manual is divided as follows:
 
 - **Introduction**: An overview of the manual's purpose. 
 - **Autograder Conventions**: An overview of the autograder system and its terminology. 
-- **Public Questions**: Details about the various General and Special Check necessary to write autograder code for Public Questions,
+- **Public Questions**: Details about the various "Checks" necessary to write autograder code for Public Questions,
 - **Check Flowchart**: A flowchart of Check dependencies. 
 - **Putting It All Together**: Examples of complete autograder code for Public Questions.
 - **Private Questions**: Details about the functions necessary to write autograder code for Private Questions. 
