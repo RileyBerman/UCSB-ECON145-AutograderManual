@@ -22,7 +22,7 @@ Accordingly, most of this manual focuses on writing Checks for Public Questions.
 
 We will look at grading four types of data structures: tibbles, vectors, lists, and plots. Moreover, as the majority of ECON 145 assignment questions are tibble-based, we  direct our attention to grading tibbles. 
 
-For fellow ECON 145 TAs, we recommend skimming through [`00-manual1.pdf`](#resources) and [`how_to_create_an_autograder_2024.pdf`](#resources) for an overview of the autograder infrastructure.
+For fellow ECON 145 TAs, we recommend skimming through [`00-manual1.pdf`](#Resources) and [`how_to_create_an_autograder_2024.pdf`](#Resources) for an overview of the autograder infrastructure.
 
 :::: {.infobox .note data-latex="{bell_note}"}
 

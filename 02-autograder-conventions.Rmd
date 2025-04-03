@@ -14,7 +14,7 @@ TAs primarily work on writing the autograder, while the Head TA handles the inte
 
 A quick overview of the [DGP.R] file will also be provided, which *every TA* should review.
 
-For implementation and testing details of the autograder, refer to the document[`how_to_create_an_autograder_2024.pdf`](#resources). 
+For implementation and testing details of the autograder, refer to the document[`how_to_create_an_autograder_2024.pdf`](#Resources). 
 
 ## General Structure 
 
