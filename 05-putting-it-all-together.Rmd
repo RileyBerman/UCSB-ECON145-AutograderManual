@@ -1,6 +1,6 @@
 # Putting It All Together {#Putting-It-All-Together}
 
-The following are examples of autograder code for a Public Question involving a tibble, vector, and list respectively, incorporating many of the [General](#General-Checks) and [Special Checks](#Special-Checks) discussed earlier.
+The following are examples of autograder code for a Public Question involving a tibble, vector, and (named) list respectively, incorporating many of the [General](#General-Checks) and [Special Checks](#Special-Checks) discussed earlier.
 
 ## Example: Tibble
 

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.2 Name Check (G) | UCSB ECON 145 Autograder Manual</title>
+  <title>Chapter 8 Resources | UCSB ECON 145 Autograder Manual</title>
   <meta name="description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
   <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.2 Name Check (G) | UCSB ECON 145 Autograder Manual" />
+  <meta property="og:title" content="Chapter 8 Resources | UCSB ECON 145 Autograder Manual" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.2 Name Check (G) | UCSB ECON 145 Autograder Manual" />
+  <meta name="twitter:title" content="Chapter 8 Resources | UCSB ECON 145 Autograder Manual" />
   
   <meta name="twitter:description" content="This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments. Many of the techniques presented here can be applied to any R-based autograder." />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="general-form.html"/>
-<link rel="next" href="Prerequisite-Check.html"/>
+<link rel="prev" href="examples.html"/>
+<link rel="next" href="references.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -273,40 +273,24 @@ div.csl-indent {
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="Name-Check" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Name Check (G)<a href="Name-Check.html#Name-Check" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><strong>Purpose</strong>: Checks whether the student’s variable has the correct name.</p>
-<p><strong>Motivation</strong>: All questions require the student to give their variable a specific name. Without a Name Check, the autograder can’t match and compare the student’s answer to the answer key – and other Checks that rely on a correctly named student variable, such as the <a href="Column-Name-Check.html#Column-Name-Check">Column Name Check</a>, may error out as a result.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="Name-Check.html#cb6-1" tabindex="-1"></a><span class="co">#Name Check Example</span></span>
-<span id="cb6-2"><a href="Name-Check.html#cb6-2" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="Name-Check.html#cb6-3" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">is.error</span>(variable_name)){ </span>
-<span id="cb6-4"><a href="Name-Check.html#cb6-4" tabindex="-1"></a>  test.results[<span class="dv">2</span>, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="st">&quot;`variable_name` is not found. Please make sure the variable is named correctly. (Any additional feedback as needed.)&quot;</span></span>
-<span id="cb6-5"><a href="Name-Check.html#cb6-5" tabindex="-1"></a>}</span></code></pre></div>
-<div id="technicals" class="section level4 unnumbered hasAnchor">
-<h4>Technicals<a href="Name-Check.html#technicals" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<div class="infobox imp">
-<p><strong>Always include the Name Check.</strong></p>
-<p>If there is no <a href="Prerequisite-Check.html#Prerequisite-Check">Prerequisite Check</a>, place this Check first (the <code>if</code> statement); otherwise, it should follow immediately after (the first <code>else if</code> statement).</p>
-</div>
-<div class="infobox note">
-<p><strong>Note</strong>:</p>
-<p>The <code>is.error()</code> function comes from the <code>berryFunctions</code> package <span class="citation">(<a href="#ref-R-berryFunctions">Boessenkool 2024</a>)</span>. For the ECON 145 autograder, this library should already be loaded in from the file <code>helper_functions/packages.R</code>.</p>
-</div>
-</div>
-</div>
-<h3>References<a href="references.html#references" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
-<div id="ref-R-berryFunctions" class="csl-entry">
-Boessenkool, Berry. 2024. <em>berryFunctions: Function Collection Related to Plotting and Hydrology</em>. <a href="https://github.com/brry/berryFunctions">https://github.com/brry/berryFunctions</a>.
-</div>
+<div id="Resources" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">Chapter 8</span> Resources<a href="Resources.html#Resources" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This is a list of additional resources for ECON 145 TAs to familiarize themselves with the autograder system and implementation.</p>
+<p>These links will direct you to the ECON 145 <em>private</em> repository on GitHub. You will need to have been invited to the repository to access them.</p>
+<ul>
+<li><p><a href="https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/autograder_presentation.mp4">autograder_presentation.mp4</a>: A recorded presentation given by Alex Zhao and Riley Berman on the technical aspects of setting up, testing, and finalizing autograders through GitHub.</p></li>
+<li><p><a href="https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/how_to_create_an_autograder_2024.pdf">how_to_create_an_autograder_2024.pdf</a>: A pdf version of the presentation slides.</p></li>
+<li><p><a href="https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_ta/00-manual1.pdf">00-manual1.pdf</a>: A comprehensive manual about the entire autograder system. Especially useful for Head TAs.</p></li>
+</ul>
+
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="general-form.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="Prerequisite-Check.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="examples.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -337,7 +321,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/RileyBerman/UCSB-ECON145-AutograderManual/edit/main/03-public-questions.Rmd",
+"link": "https://github.com/RileyBerman/UCSB-ECON145-AutograderManual/edit/main/08-resources.Rmd",
 "text": "Suggest an edit"
 },
 "history": {

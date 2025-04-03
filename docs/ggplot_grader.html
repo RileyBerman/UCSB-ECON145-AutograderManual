@@ -251,6 +251,7 @@ div.csl-indent {
 <li class="chapter" data-level="" data-path="examples.html"><a href="examples.html#example-5"><i class="fa fa-check"></i>Example 5</a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="8" data-path="Resources.html"><a href="Resources.html"><i class="fa fa-check"></i><b>8</b> Resources</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -438,6 +439,7 @@ div.csl-indent {
 <li>This is not a problem because <code>ggplot_grader()</code> first tests for a <code>ggplot</code> class attribute and then performs the <a href="Name-Check.html#Name-Check">Name Check</a>. If <code>var</code> does not exist or is not a ggplot object, the subsequent Checks will not be triggered.</li>
 </ul>
 <p>Like in <a href="private_grader.html#private_grader"><code>private_grader()</code></a>, <code>quest_prev_status</code> is an <em>optional</em> argument when using <code>prev_check</code> and <code>quest_prev</code> but helps <em>clarify</em> an unclear prerequisite question’s location in the feedback message.</p>
+<p>Note that for <code>color_fill_check</code>, <code>colour</code> is used to set the argument instead of <code>color</code>.</p>
 <div id="aesthetic_check_difference" class="section level4 unnumbered hasAnchor">
 <h4>When to use aesthetic_check or aesthetic_flexible_check?<a href="ggplot_grader.html#aesthetic_check_difference" class="anchor-section" aria-label="Anchor link to header"></a></h4>
 <p><code>aesthetic_check</code> tests if the x-y aesthetic mappings of <code>var</code> are <em>exactly the same</em> as in <code>var_test</code>, while <code>aesthetic_flexible_check</code> tests if the x-y aesthetic mappings of <code>var_test</code> are <em>contained</em> in <code>var</code>.</p>

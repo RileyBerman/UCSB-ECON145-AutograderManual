@@ -1,0 +1,11 @@
+# Resources {#Resources}
+
+This is a list of additional resources for ECON 145 TAs to familiarize themselves with the autograder system and implementation. 
+
+These links will direct you to the ECON 145 *private* repository on GitHub. You will need to have been invited to the repository to access them. 
+
+-   [autograder_presentation.mp4](https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/autograder_presentation.mp4): A recorded presentation given by Alex Zhao and Riley Berman on the technical aspects of setting up, testing, and finalizing autograders through GitHub. 
+
+-   [how_to_create_an_autograder_2024.pdf](https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/how_to_create_an_autograder_2024.pdf): A pdf version of the presentation slides.
+
+- [00-manual1.pdf](https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_ta/00-manual1.pdf): A comprehensive manual about the entire autograder system. Especially useful for Head TAs. 

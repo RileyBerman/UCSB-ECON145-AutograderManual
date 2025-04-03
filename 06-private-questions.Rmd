@@ -22,7 +22,7 @@ Remember to *always* initialize `test.results[#, ]` before implementing a questi
 
 ### Description {-}
 
-Grades Private Questions involving tibbles, vectors, lists, or plots, providing only basic feedback.
+Grades Private Questions involving tibbles, vectors, (named) lists, or plots, providing only basic feedback.
 
 The function implements many of the [General Checks](#General-Checks) discussed earlier.
 
@@ -345,6 +345,8 @@ Note that `var` is the *expected* student's ggplot object and may not necessaril
 -   This is not a problem because `ggplot_grader()` first tests for a `ggplot` class attribute and then performs the [Name Check](#Name-Check). If `var` does not exist or is not a ggplot object, the subsequent Checks will not be triggered.
 
 Like in [`private_grader()`](#private_grader), `quest_prev_status` is an *optional* argument when using `prev_check` and `quest_prev` but helps *clarify* an unclear prerequisite question's location in the feedback message.
+
+Note that for `color_fill_check`, `colour` is used to set the argument instead of `color`. 
 
 #### When to use aesthetic_check or aesthetic_flexible_check? {- #aesthetic_check_difference}
 

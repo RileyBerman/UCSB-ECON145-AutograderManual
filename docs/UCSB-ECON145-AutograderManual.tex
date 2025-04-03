@@ -214,7 +214,7 @@
 
 \title{UCSB ECON 145 Autograder Manual}
 \author{Riley Berman, Alex Zhao, \& 2024 ECON 145 Summer Team}
-\date{Last Updated: 2025-03-29}
+\date{Last Updated: 2025-04-03}
 
 \begin{document}
 \maketitle
@@ -272,7 +272,7 @@ Accordingly, most of this manual focuses on writing Checks for Public Questions.
 
 We will look at grading four types of data structures: tibbles, vectors, lists, and plots. Moreover, as the majority of ECON 145 assignment questions are tibble-based, we direct our attention to grading tibbles.
 
-For fellow ECON 145 TAs, we recommend skimming through \texttt{00-manual1.pdf} and \texttt{how\_to\_create\_an\_autograder\_2024.pdf} for an overview of the autograder infrastructure.
+For fellow ECON 145 TAs, we recommend skimming through \hyperref[Resources]{\texttt{00-manual1.pdf}} and \hyperref[Resources]{\texttt{how\_to\_create\_an\_autograder\_2024.pdf}} for an overview of the autograder infrastructure.
 
 \begin{infobox}{bell_note}
 \textbf{Note}:
@@ -296,7 +296,7 @@ TAs primarily work on writing the autograder, while the Head TA handles the inte
 
 A quick overview of the \hyperref[DGP.R]{DGP.R} file will also be provided, which \emph{every TA} should review.
 
-For implementation and testing details of the autograder, refer to the document \texttt{how\_to\_create\_an\_autograder\_2024.pdf}.
+For implementation and testing details of the autograder, refer to the document\hyperref[Resources]{\texttt{how\_to\_create\_an\_autograder\_2024.pdf}}.
 
 \section{General Structure}\label{general-structure}
 
@@ -1243,7 +1243,7 @@ This sequence is flexible. Experienced TAs can reorder Checks to suit the logic 
 
 \chapter{Putting It All Together}\label{Putting-It-All-Together}
 
-The following are examples of autograder code for a Public Question involving a tibble, vector, and list respectively, incorporating many of the \hyperref[General-Checks]{General} and \hyperref[Special-Checks]{Special Checks} discussed earlier.
+The following are examples of autograder code for a Public Question involving a tibble, vector, and (named) list respectively, incorporating many of the \hyperref[General-Checks]{General} and \hyperref[Special-Checks]{Special Checks} discussed earlier.
 
 \section{Example: Tibble}\label{example-tibble}
 
@@ -1501,7 +1501,7 @@ Remember to \emph{always} initialize \texttt{test.results{[}\#,\ {]}} before imp
 \subsection*{Description}\label{description}
 \addcontentsline{toc}{subsection}{Description}
 
-Grades Private Questions involving tibbles, vectors, lists, or plots, providing only basic feedback.
+Grades Private Questions involving tibbles, vectors, (named) lists, or plots, providing only basic feedback.
 
 The function implements many of the \hyperref[General-Checks]{General Checks} discussed earlier.
 
@@ -1874,6 +1874,8 @@ Note that \texttt{var} is the \emph{expected} student's ggplot object and may no
 \end{itemize}
 
 Like in \hyperref[private_grader]{\texttt{private\_grader()}}, \texttt{quest\_prev\_status} is an \emph{optional} argument when using \texttt{prev\_check} and \texttt{quest\_prev} but helps \emph{clarify} an unclear prerequisite question's location in the feedback message.
+
+Note that for \texttt{color\_fill\_check}, \texttt{colour} is used to set the argument instead of \texttt{color}.
 
 \subsubsection*{When to use aesthetic\_check or aesthetic\_flexible\_check?}\label{aesthetic_check_difference}
 \addcontentsline{toc}{subsubsection}{When to use aesthetic\_check or aesthetic\_flexible\_check?}
@@ -2496,6 +2498,20 @@ Assume \texttt{data1.csv} has some unique column \texttt{data1\_unique\_column} 
 \end{Highlighting}
 \end{Shaded}
 
+\chapter{Resources}\label{Resources}
+
+This is a list of additional resources for ECON 145 TAs to familiarize themselves with the autograder system and implementation.
+
+These links will direct you to the ECON 145 \emph{private} repository on GitHub. You will need to have been invited to the repository to access them.
+
+\begin{itemize}
+\item
+  \href{https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/autograder_presentation.mp4}{autograder\_presentation.mp4}: A recorded presentation given by Alex Zhao and Riley Berman on the technical aspects of setting up, testing, and finalizing autograders through GitHub.
+\item
+  \href{https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/how_to_create_an_autograder_2024.pdf}{how\_to\_create\_an\_autograder\_2024.pdf}: A pdf version of the presentation slides.
+\item
+  \href{https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_ta/00-manual1.pdf}{00-manual1.pdf}: A comprehensive manual about the entire autograder system. Especially useful for Head TAs.
+\end{itemize}
 
   \bibliography{book.bib,packages.bib}
 
