@@ -8,4 +8,4 @@ These links will direct you to the ECON 145 *private* repository on GitHub. You 
 
 -   [how_to_create_an_autograder_2024.pdf](https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_quickstart_ta/how_to_create_an_autograder_2024.pdf): A pdf version of the presentation slides.
 
-- [00-manual1.pdf](https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_ta/00-manual1.pdf): A comprehensive manual about the entire autograder system. Especially useful for Head TAs. 
+-   [00-manual1.pdf](https://github.com/datawranglingUCSBecon/econ_145/blob/master/manuals/autograder_ta/00-manual1.pdf): A comprehensive manual about the entire autograder system. Especially useful for Head TAs. 
