@@ -1,4 +1,4 @@
-# Resources {#Resources}
+# Resources 
 
 This is a list of additional resources for ECON 145 TAs to familiarize themselves with the autograder system and implementation. 
 
