@@ -1,0 +1,16 @@
+Type: Book
+Title: UCSB ECON 145 Autograder Manual
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Riley",
+           family = "Berman",
+           role = c("aut", "cre"),
+           email = "riley.berman@gmail.com")
+Description: This manual outlines how to develop an autograder for UCSB ECON 145 coding assignments.
+Imports: 
+    bookdown,
+    tidyverse, 
+    DiagrammeR, 
+    kableExtra
+
+    
