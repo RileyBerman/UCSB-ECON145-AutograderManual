@@ -13,5 +13,6 @@ Imports:
     DiagrammeR, 
     kableExtra, 
     knitr, 
-    sessioninfo
+    sessioninfo, 
+    rmarkdown
     
