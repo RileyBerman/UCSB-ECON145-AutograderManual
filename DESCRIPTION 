@@ -11,6 +11,7 @@ Imports:
     bookdown,
     tidyverse, 
     DiagrammeR, 
-    kableExtra
+    kableExtra, 
+    knitr
 
     
