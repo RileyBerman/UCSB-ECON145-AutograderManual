@@ -39,6 +39,9 @@ jobs:
 
       - name: Install and cache dependencies
         uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::sessioninfo
+          needs: website
 
       - name: Build site
         run: |
