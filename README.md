@@ -19,5 +19,14 @@ This manual is divided as follows:
 
 Special thanks to Sean Kross's ["How to Start a Bookdown Book"](https://seankross.com/2016/11/17/How-to-Start-a-Bookdown-Book.html) for his [boilerplate code](https://github.com/seankross/bookdown-start) and guidance, and to Yihui Xie's excellent book, ["bookdown: Authoring Books and Technical Documents with R Markdown"](https://bookdown.org/yihui/bookdown/), for his detailed breakdown of the bookdown package.
 
+Collaborators can update the website by: 
+
+1. Merging pull requests or pushing to the `main` branch themselves the new information. 
+2. Opening up a remote repository and running the lines `bookdown::render_book("index.Rmd", "bookdown::gitbook")` **and** `bookdown::render_book("index.Rmd", "bookdown::pdf_book")` in the Console or using the "Build" tab in Rstudio.
+3. Committing and pushing the changes to the `main` branch on GitHub -- in particular, the `docs` folder, which contains the website files.
+4. The website will automatically update shortly.
+
+If I ever have the time (and sophistication), I will try to automate this process with GitHub Actions.
+
 For any questions or issues, please contact [riley.berman@gmail.com](mailto:riley.berman@gmail.com).
 
