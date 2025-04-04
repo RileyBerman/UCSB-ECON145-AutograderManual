@@ -14,5 +14,6 @@ Imports:
     kableExtra (>= 1.4.0),
     knitr (>= 1.46),
     sessioninfo (>= 1.2.2),
-    rmarkdown (>= 2.26)
+    rmarkdown (>= 2.26), 
+    janitor (>= 2.0.0)
     
