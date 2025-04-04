@@ -1,6 +1,5 @@
 Type: Book
 Title: UCSB ECON 145 Autograder Manual
-Version: 0.0.0.9000
 Authors@R: 
     person(given = "Riley",
            family = "Berman",
