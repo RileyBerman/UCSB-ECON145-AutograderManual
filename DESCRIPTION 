@@ -12,5 +12,6 @@ Imports:
     tidyverse, 
     DiagrammeR, 
     kableExtra, 
-    knitr
+    knitr, 
+    sessioninfo
     
