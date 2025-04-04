@@ -21,7 +21,7 @@ Special thanks to Sean Kross's ["How to Start a Bookdown Book"](https://seankros
 
 Collaborators can update the website by: 
 
-1. Merging pull requests or pushing to the `main` branch themselves the new information. 
+1. Adding the new information to the `main` branch on GitHub via merging pull requests or directly editing the .Rmd files. 
 2. Opening up a remote repository and running the lines `bookdown::render_book("index.Rmd", "bookdown::gitbook")` **and** `bookdown::render_book("index.Rmd", "bookdown::pdf_book")` in the Console or using the "Build" tab in Rstudio.
 3. Committing and pushing the changes to the `main` branch on GitHub -- in particular, the `docs` folder, which contains the website files.
 4. The website will automatically update shortly.
